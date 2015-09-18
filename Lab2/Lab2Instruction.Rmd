@@ -7,26 +7,14 @@ output:
     keep_md: yes
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+Lab2 contains basics for exporting and importing data to and from R. Rather than a complete collection of functions for R data import/export, I will introduce the frequenty-used ways to importing and exporting data to and from R from my own R experience. Moreover, it will highlight the solutions to 
 
-## R Markdown
+## Imports
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+R imports
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## References
 
-```{r cars}
-summary(cars)
-```
+The following is a list of materials on R data import/export that you can access on the Web.
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+- [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.html)
