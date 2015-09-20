@@ -108,21 +108,21 @@ list.files()</code></pre>
 file.info(list.files())</code></pre>
 <pre><code>##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         306  TRUE  755 2015-09-20 20:06:53
+## Lab2                         306  TRUE  755 2015-09-21 01:15:56
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-20 20:04:05
+## script                       136  TRUE  755 2015-09-21 01:15:46
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
 ## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
-## Lab2                     2015-09-20 20:06:53 2015-09-20 20:04:05 501  20
+## Lab2                     2015-09-21 01:15:56 2015-09-21 01:15:46 501  20
 ## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-20 20:04:05 501  20
-## script                   2015-09-20 20:04:05 2015-09-20 20:04:05 501  20
+## reference                2015-09-16 13:27:58 2015-09-21 01:15:46 501  20
+## script                   2015-09-21 01:15:46 2015-09-21 01:15:46 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff
@@ -135,20 +135,15 @@ file.info(list.files())</code></pre>
 ## 生态数据分析课程大纲.pdf tonytsai  staff</code></pre>
 <pre class="r"><code># list only directories under DAE
 list.dirs()</code></pre>
-<pre><code>## [1] &quot;.&quot;                                           
-## [2] &quot;./Lab2&quot;                                      
-## [3] &quot;./Lab2/data&quot;                                 
-## [4] &quot;./Lab2/data/CMDSSS&quot;                          
-## [5] &quot;./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;
-## [6] &quot;./reference&quot;                                 
-## [7] &quot;./script&quot;</code></pre>
+<pre><code>## [1] &quot;.&quot;                  &quot;./Lab2&quot;             &quot;./Lab2/data&quot;       
+## [4] &quot;./Lab2/data/CMDSSS&quot; &quot;./reference&quot;        &quot;./script&quot;</code></pre>
 <pre class="r"><code># find all R scripts under DAE and give their full path names (or absolute paths)
 list.files(recursive = TRUE, pattern = &quot;.R$&quot;, full.names = TRUE)</code></pre>
 <pre><code>## [1] &quot;./script/20150916.R&quot;</code></pre>
 <pre class="r"><code># create a recursive directory under DAE/Lab2, which stores the TXT data 
 # that will be read in Part III.
-if(!dir.exists(&quot;Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;))
-  dir.create(&quot;Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;, recursive = TRUE)
+if(!dir.exists(&quot;Lab2/data/CMDSSS&quot;))
+  dir.create(&quot;Lab2/data/CMDSSS&quot;, recursive = TRUE)
 
 # create a temporary directory under script
 if(!dir.exists(&quot;script/tmp&quot;)) dir.create(&quot;script/tmp&quot;)
@@ -194,8 +189,8 @@ list.files(&quot;script&quot;)</code></pre>
 sink(file = &quot;data/CO2.txt&quot;)
 # load R built-in dataset CO2. type ?CO2 to see the decription about CO2 dataset.
 data(&quot;CO2&quot;)
-# divert the first 7 rows of CO2
-head(CO2, 7)
+# divert the first 14 rows of CO2
+head(CO2, 14)
 # end the divertion
 sink()</code></pre>
 <pre class="r"><code># sink() does not work in knitr, because it is already used internally to capture 
@@ -204,7 +199,7 @@ sink()</code></pre>
 {
   sink(file = &quot;data/CO2.txt&quot;)
   data(&quot;CO2&quot;)
-  print(head(CO2, 7))
+  print(head(CO2, 14))
   sink()
 }
 # the content of CO2.txt will be checked in Part III.</code></pre>
@@ -215,17 +210,194 @@ sink()</code></pre>
 x &lt;- capture.output(1:10)
 x</code></pre>
 <pre><code>## [1] &quot; [1]  1  2  3  4  5  6  7  8  9 10&quot;</code></pre>
-<pre class="r"><code># divert the first 7 rows of CO2 dataset to CO2.txt
-capture.output(head(CO2, 7), file = &quot;data/CO2.txt&quot;)</code></pre>
+<pre class="r"><code># divert the first 14 rows of CO2 dataset to CO2.txt
+capture.output(head(CO2, 14), file = &quot;data/CO2.txt&quot;)</code></pre>
 </div>
 <div id="part-iii-imports-and-exports" class="section level2">
 <h2>Part III Imports and Exports</h2>
-<p><code>read.table()</code> and <code>write.table()</code>:</p>
-<p><code>read.csv()</code> and <code>write.csv()</code>:</p>
-<p><code>read.xls()</code> and <code>write.xls()</code>:</p>
-<p><code>read.dbf()</code> and <code>write.dbf()</code>:</p>
-<p><code>load()</code> and <code>save()</code>:</p>
-<p><code>data()</code>:</p>
+<p>Here I list some functions in R for reading and storing data in common formats, such as Plain Text (.txt), CSV (.csv), Excel (.xls, .xlsx), and dBase (.dbf). For large and complex data, databases are supposed to be used for management.</p>
+<p><strong><code>read.table()</code></strong> and <strong><code>write.table()</code></strong>: reads a file in table format and creates a data frame from it.</p>
+<p><strong><code>read.csv()</code></strong> and <strong><code>write.csv()</code></strong>: reads a CSV file and creates a data frame from it. A standard <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> file actually stores tabular data in plain text with values separated by comma.</p>
+<p><code>read.xlsx()</code> and <code>write.xlsx()</code>: reads and writes Excel 2007 and Excel 97/2000/XP/2003 files. They are from <a href="https://cran.r-project.org/web/packages/xlsx/index.html">xlsx</a> package. There are some other packages for reading or/and Excel files, such as <a href="https://cran.r-project.org/web/packages/openxlsx/index.html">openxlsx</a>, <a href="https://cran.r-project.org/web/packages/XLConnect/index.html">XLConnect</a>, <a href="https://cran.r-project.org/web/packages/readxl/index.html">readxl</a> and <a href="https://cran.r-project.org/web/packages/WriteXLS/index.html">WriteXLS</a>. Frankly, I am not used to reading and writing Excel files. I usually process Excel files by saving them as CSV files.</p>
+<p><code>read.dbf()</code> and <code>write.dbf()</code>: reads and writes dBase files. They are from <a href="https://cran.r-project.org/web/packages/foreign/index.html">foreign</a> package, which provides functions for reading and writing data stored by Minitab, S, SAS, SPSS, Stata, dBase, …. The reason why I specially introduce how to read dBase files is that the attribute table of shape file is stored in .dbf format.</p>
+<p><strong><code>save()</code></strong> and <strong><code>load()</code></strong>: writes R objects to the specified file. The objects can be read back from the file later by using <code>load</code>.</p>
+<p><code>data()</code>: loads specified data sets, or list the available data sets.</p>
+<pre class="r"><code># read data in Plain Text
+txt &lt;- read.table(file = &quot;data/CO2.txt&quot;)
+# check the content of CO2.txt
+str(txt)</code></pre>
+<pre><code>## 'data.frame':    14 obs. of  5 variables:
+##  $ Plant    : Factor w/ 2 levels &quot;Qn1&quot;,&quot;Qn2&quot;: 1 1 1 1 1 1 1 2 2 2 ...
+##  $ Type     : Factor w/ 1 level &quot;Quebec&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Treatment: Factor w/ 1 level &quot;nonchilled&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ conc     : int  95 175 250 350 500 675 1000 95 175 250 ...
+##  $ uptake   : num  16 30.4 34.8 37.2 35.3 39.2 39.7 13.6 27.3 37.1 ...</code></pre>
+<pre class="r"><code># exttract data of Qn1 plant
+Qn1 &lt;- subset(txt, Plant == &quot;Qn1&quot;)
+# save Qn1 to .txt. 
+# Though the file extension is .txt, the data is actually stored in a CSV format.
+write.table(Qn1, file = &quot;data/CO2-Qn1.txt&quot;, row.names = FALSE, quote = FALSE, sep = &quot;,&quot;)
+
+# save Qn1 to .csv
+write.csv(Qn1, file = &quot;data/CO2-Qn1.csv&quot;, row.names = FALSE, quote = FALSE)
+# use read.csv to read CO2-Qn1.csv
+# fileEncoding declares the encoding used on the file, which must be careful 
+# when you read data containing Chinese on Windows. In such a situation, you can 
+# try fileEncoding = &quot;cp936&quot;.
+# stringsAsFactors is a logical value indicating whether character vectors should 
+# be converted to factors. The default is TRUE, while some functions doesn't work
+# with factors.
+csv &lt;- read.csv(file = &quot;data/CO2-Qn1.csv&quot;, header = TRUE, sep = &quot;,&quot;, 
+                fileEncoding = &quot;utf-8&quot;, stringsAsFactors = FALSE)
+str(csv)</code></pre>
+<pre><code>## 'data.frame':    7 obs. of  5 variables:
+##  $ Plant    : chr  &quot;Qn1&quot; &quot;Qn1&quot; &quot;Qn1&quot; &quot;Qn1&quot; ...
+##  $ Type     : chr  &quot;Quebec&quot; &quot;Quebec&quot; &quot;Quebec&quot; &quot;Quebec&quot; ...
+##  $ Treatment: chr  &quot;nonchilled&quot; &quot;nonchilled&quot; &quot;nonchilled&quot; &quot;nonchilled&quot; ...
+##  $ conc     : int  95 175 250 350 500 675 1000
+##  $ uptake   : num  16 30.4 34.8 37.2 35.3 39.2 39.7</code></pre>
+<pre class="r"><code># install xlsx package
+if(!&quot;xlsx&quot; %in% installed.packages()) install.packages(&quot;xlsx&quot;)
+# load xlsx pacakage
+library(xlsx)</code></pre>
+<pre><code>## Loading required package: rJava
+## Loading required package: xlsxjars</code></pre>
+<pre class="r"><code># write Qn1 to .xls
+write.xlsx(Qn1, file = &quot;data/CO2-Qn1.xls&quot;, sheetName = &quot;Sheet1&quot;, col.names = TRUE, 
+           row.names = FALSE)
+# use read.xlsx to read CO2-Qn1.xls 
+xlsx &lt;- read.xlsx(file = &quot;data/CO2-Qn1.xls&quot;, sheetName = &quot;Sheet1&quot;)
+str(xlsx)</code></pre>
+<pre><code>## 'data.frame':    7 obs. of  5 variables:
+##  $ Plant    : Factor w/ 1 level &quot;Qn1&quot;: 1 1 1 1 1 1 1
+##  $ Type     : Factor w/ 1 level &quot;Quebec&quot;: 1 1 1 1 1 1 1
+##  $ Treatment: Factor w/ 1 level &quot;nonchilled&quot;: 1 1 1 1 1 1 1
+##  $ conc     : num  95 175 250 350 500 675 1000
+##  $ uptake   : num  16 30.4 34.8 37.2 35.3 39.2 39.7</code></pre>
+<pre class="r"><code># install foreign package
+if(!&quot;foreign&quot; %in% installed.packages()) install.packages(&quot;foreign&quot;)
+# load foreign pacakage
+library(foreign)
+# write Qn1 to .dbf
+write.dbf(Qn1, file = &quot;data/CO2-Qn1.dbf&quot;)
+# use read.dbf to read CO2-Qn1.dbf
+dbf &lt;- read.dbf(file = &quot;data/CO2-Qn1.dbf&quot;)
+str(dbf)</code></pre>
+<pre><code>## 'data.frame':    7 obs. of  5 variables:
+##  $ Plant    : Factor w/ 1 level &quot;Qn1&quot;: 1 1 1 1 1 1 1
+##  $ Type     : Factor w/ 1 level &quot;Quebec&quot;: 1 1 1 1 1 1 1
+##  $ Treatment: Factor w/ 1 level &quot;nonchilled&quot;: 1 1 1 1 1 1 1
+##  $ conc     : int  95 175 250 350 500 675 1000
+##  $ uptake   : num  16 30.4 34.8 37.2 35.3 39.2 39.7
+##  - attr(*, &quot;data_types&quot;)= chr  &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;N&quot; ...</code></pre>
+<pre class="r"><code># list objects in current environment
+ls()</code></pre>
+<pre><code>## [1] &quot;CO2&quot;  &quot;csv&quot;  &quot;dbf&quot;  &quot;Qn1&quot;  &quot;txt&quot;  &quot;x&quot;    &quot;xlsx&quot;</code></pre>
+<pre class="r"><code># save txt, csv, xlsx and dbf .RData or .rda
+save(txt, csv, xlsx, dbf, file = &quot;data/format.RData&quot;)
+# remove txt, csv, xlsx and dbf from current environment
+rm(txt, csv, xlsx, dbf)
+ls()</code></pre>
+<pre><code>## [1] &quot;CO2&quot; &quot;Qn1&quot; &quot;x&quot;</code></pre>
+<pre class="r"><code># load format.RData
+load(file = &quot;data/format.RData&quot;)
+# list objects in current environment
+ls()</code></pre>
+<pre><code>## [1] &quot;CO2&quot;  &quot;csv&quot;  &quot;dbf&quot;  &quot;Qn1&quot;  &quot;txt&quot;  &quot;x&quot;    &quot;xlsx&quot;</code></pre>
+<div id="demostration" class="section level3">
+<h3>Demostration</h3>
+<p>The <code>SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT</code> contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of <strong>SURF_CLI_CHN_MUL_DAY</strong> v3.0 produced by <a href="http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger">CMDSSS</a>. The following code demostrates how to preprocess the <strong>SURF_CLI_CHN_MUL_DAY</strong> dataset and extract your desired data in R.</p>
+<pre class="r"><code># use read.table to read dataset in TXT
+data &lt;- read.table(file = &quot;data/CMDSSS/SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT&quot;)
+str(data)</code></pre>
+<pre><code>## 'data.frame':    24240 obs. of  13 variables:
+##  $ V1 : int  50136 50136 50136 50136 50136 50136 50136 50136 50136 50136 ...
+##  $ V2 : int  5258 5258 5258 5258 5258 5258 5258 5258 5258 5258 ...
+##  $ V3 : int  12231 12231 12231 12231 12231 12231 12231 12231 12231 12231 ...
+##  $ V4 : int  4385 4385 4385 4385 4385 4385 4385 4385 4385 4385 ...
+##  $ V5 : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
+##  $ V6 : int  9 9 9 9 9 9 9 9 9 9 ...
+##  $ V7 : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ V8 : int  94 83 82 153 152 157 170 144 89 80 ...
+##  $ V9 : int  196 219 144 245 264 242 296 219 166 227 ...
+##  $ V10: int  29 1 4 97 85 67 57 104 47 -33 ...
+##  $ V11: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ V12: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ V13: int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+<pre class="r"><code># V1: station id
+# V2: latitude, the last two digits are minitue and the remaining digits are degrees
+# V3: longitude, the last two digits are minitue and the remaining digits are degrees
+# V4: altitude in 0.1 meter. When the station altitude is estimated rather than 
+#     measured, 100000 is added.
+# V5: year
+# V6: month
+# V7: days of the month
+# V8: average temperature in 0.1 degree Celsius
+# V9: daily maximum temperature in 0.1 degree Celsius
+# V10: daily minimum temperature in 0.1 degress Celsius.
+#      When the actual temperature is higher than the higher limit of the instrument 
+#      measuring range, 10000 is added; When the actual temperature is lower than the 
+#      lower limit, 10000 is subtracted.
+#      32766 indicates observations are not available (NA).
+# V11: quality control code of average temperature
+# V12: quality control code of daily maximum temperature
+# V13: quality control code of daily minimum temperature
+colnames(data) &lt;- c(&quot;id&quot;, &quot;lat&quot;, &quot;lng&quot;, &quot;alt&quot;, &quot;year&quot;, &quot;month&quot;, &quot;day&quot;, &quot;meanT&quot;, 
+                    &quot;maxT&quot;, &quot;minT&quot;, &quot;meanQC&quot;, &quot;maxQC&quot;, &quot;minQC&quot;)
+
+# convert dm (the last two digits of dm represent minitue) into degree
+DM2D &lt;- function(dm) {
+  dm %/% 100 + (dm %% 100) / 60
+}
+
+# process function for temperature
+process &lt;- function(df) {
+  df[, 2:3] &lt;- DM2D(df[, 2:3]) # latitude and longitude
+  df[, 4] &lt;- ifelse(df[, 4] &gt; 100000, df[, 4] - 100000, df[, 4]) # altitude
+  # add a date-time variable for convenient date-time calculation
+  df$ymd &lt;- ISOdate(df$year, df$month, df$day) 
+  df[df[, 8] == 32766, 8] &lt;- NA
+  df[df[, 9] == 32766, 9] &lt;- NA
+  df[df[, 10] == 32766, 10] &lt;- NA
+  df[, 8:10] &lt;- df[, 8:10] / 10
+  df
+}
+
+data &lt;- process(data)
+str(data)</code></pre>
+<pre><code>## 'data.frame':    24240 obs. of  14 variables:
+##  $ id    : int  50136 50136 50136 50136 50136 50136 50136 50136 50136 50136 ...
+##  $ lat   : num  53 53 53 53 53 ...
+##  $ lng   : num  123 123 123 123 123 ...
+##  $ alt   : num  4385 4385 4385 4385 4385 ...
+##  $ year  : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
+##  $ month : int  9 9 9 9 9 9 9 9 9 9 ...
+##  $ day   : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ meanT : num  9.4 8.3 8.2 15.3 15.2 15.7 17 14.4 8.9 8 ...
+##  $ maxT  : num  19.6 21.9 14.4 24.5 26.4 24.2 29.6 21.9 16.6 22.7 ...
+##  $ minT  : num  2.9 0.1 0.4 9.7 8.5 6.7 5.7 10.4 4.7 -3.3 ...
+##  $ meanQC: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ maxQC : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ minQC : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ ymd   : POSIXct, format: &quot;2014-09-01 12:00:00&quot; &quot;2014-09-02 12:00:00&quot; ...</code></pre>
+<pre class="r"><code># extract data collected from Miyun station whose id is 54416 and discard quality control codes
+x &lt;- subset(data[, !names(data) %in% c(&quot;meanQC&quot;, &quot;maxQC&quot;, &quot;minQC&quot;)], id == 54416)
+str(x)</code></pre>
+<pre><code>## 'data.frame':    30 obs. of  11 variables:
+##  $ id   : int  54416 54416 54416 54416 54416 54416 54416 54416 54416 54416 ...
+##  $ lat  : num  40.4 40.4 40.4 40.4 40.4 ...
+##  $ lng  : num  117 117 117 117 117 ...
+##  $ alt  : num  718 718 718 718 718 718 718 718 718 718 ...
+##  $ year : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
+##  $ month: int  9 9 9 9 9 9 9 9 9 9 ...
+##  $ day  : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ meanT: num  22.2 19.5 20.6 22.5 22.9 23.5 23.2 21.5 20.4 20.8 ...
+##  $ maxT : num  25.9 22.5 29.4 32.9 29.2 28.7 28.1 29.1 28.9 28.2 ...
+##  $ minT : num  20.1 18.6 12.7 15.1 17.4 19.1 20.4 12.3 13.3 15.6 ...
+##  $ ymd  : POSIXct, format: &quot;2014-09-01 12:00:00&quot; &quot;2014-09-02 12:00:00&quot; ...</code></pre>
+<pre class="r"><code># save the extracted data to external file for further data analysis
+save(x, file = &quot;data/Miyun-TEM-201409.RData&quot;)</code></pre>
+</div>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
