@@ -75,36 +75,113 @@ img {
 
 
 <p>Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.</p>
-<div id="file-and-directory-manipulation" class="section level2">
-<h2>File and Directory Manipulation</h2>
-<p><code>setwd()</code> and <code>getwd()</code>: used to change or determine the current working directory.</p>
-<p><code>list.files()</code></p>
-<p><code>file.create()</code></p>
-<p><code>file.exists()</code>: returns a logical vector indicating whether the given file exists for each name in the first argument, a character vector.</p>
-<p><code>file.remove()</code></p>
-<p><code>file.copy()</code></p>
-<p><code>dir.create()</code></p>
-<pre class="r"><code>setwd(&quot;/Users/tonytsai/Documents/R/DAE&quot;)
+<p>Note that all R codes in the following are run on my own Mac OS X. When you try them on your own computer, please customize your own working directory.</p>
+<div id="part-i-file-and-directory-manipulation" class="section level2">
+<h2>Part I File and Directory Manipulation</h2>
+<p><code>setwd()</code> and <code>getwd()</code>: used to change or determine the current working directory. It’s a good habit to set working directory before your data analysis as all results during your data analysis will be stored in the working directory.</p>
+<p><code>list.files()</code> and <code>list.dirs()</code>: returns a character vector of names of files or directories under the given directory.</p>
+<p><code>file.info()</code>: gives file size, creation time, directory vs. ordinary file status, and so on for each file whose name is in the argument, a character vector.</p>
+<p><code>file.create()</code> and <code>dir.create()</code>: creates files or directories with the given names if they do not already exist.</p>
+<p><code>file.exists()</code> and <code>dir.exists()</code>: returns a logical vector indicating whether the given file exists for each name in the first argument, a character vector.</p>
+<p><code>file.copy()</code> and <code>file.rename()</code>: moves files <code>from</code> source path <code>to</code> destination path.</p>
+<p><code>file.remove()</code> and <strong><code>unlink()</code></strong>: deletes the files or directories specified by the first argument, a character vector.</p>
+<pre class="r"><code># set current working directory to DAE
+setwd(&quot;/Users/tonytsai/Documents/R/DAE&quot;)
 getwd()</code></pre>
 <pre><code>## [1] &quot;/Users/tonytsai/Documents/R/DAE&quot;</code></pre>
-<pre class="r"><code>list.files()</code></pre>
+<pre class="r"><code># list all files including directories under current working directory DAE
+list.files()</code></pre>
 <pre><code>## [1] &quot;Lab1note.pdf&quot;             &quot;Lab2&quot;                    
 ## [3] &quot;Lecture1Introduction.pdf&quot; &quot;LICENSE&quot;                 
 ## [5] &quot;README.md&quot;                &quot;reference&quot;               
 ## [7] &quot;script&quot;                   &quot;生态数据分析课程大纲.pdf&quot;</code></pre>
-<pre class="r"><code>list.files(recursive = TRUE, pattern = &quot;.R&quot;, full.names = TRUE)</code></pre>
-<pre><code>## [1] &quot;./Lab2/Lab2Instruction.Rmd&quot; &quot;./script/20150916.R&quot;</code></pre>
-<pre class="r"><code>if(file.exists(&quot;READEME.html&quot;)) file.remove(&quot;README.html&quot;)</code></pre>
-<p>To see all the file- and directory-related functions, tyoe the following:</p>
+<pre class="r"><code># extract file information for those files
+file.info(list.files())</code></pre>
+<pre><code>##                             size isdir mode               mtime
+## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
+## Lab2                         306  TRUE  755 2015-09-20 16:11:44
+## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
+## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
+## README.md                    244 FALSE  644 2015-09-18 09:58:11
+## reference                    170  TRUE  777 2015-09-16 11:22:01
+## script                       136  TRUE  755 2015-09-20 16:11:36
+## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
+##                                        ctime               atime uid gid
+## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:23 501  20
+## Lab2                     2015-09-20 16:11:44 2015-09-20 16:11:36 501  20
+## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
+## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
+## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
+## reference                2015-09-16 13:27:58 2015-09-20 16:11:36 501  20
+## script                   2015-09-20 16:11:36 2015-09-20 16:11:36 501  20
+## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
+##                             uname grname
+## Lab1note.pdf             tonytsai  staff
+## Lab2                     tonytsai  staff
+## Lecture1Introduction.pdf tonytsai  staff
+## LICENSE                  tonytsai  staff
+## README.md                tonytsai  staff
+## reference                tonytsai  staff
+## script                   tonytsai  staff
+## 生态数据分析课程大纲.pdf tonytsai  staff</code></pre>
+<pre class="r"><code># list only directories under DAE
+list.dirs()</code></pre>
+<pre><code>## [1] &quot;.&quot;                                           
+## [2] &quot;./Lab2&quot;                                      
+## [3] &quot;./Lab2/data&quot;                                 
+## [4] &quot;./Lab2/data/CMDSSS&quot;                          
+## [5] &quot;./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;
+## [6] &quot;./reference&quot;                                 
+## [7] &quot;./script&quot;</code></pre>
+<pre class="r"><code># find all R scripts under DAE and give their full path names (or absolute paths)
+list.files(recursive = TRUE, pattern = &quot;.R$&quot;, full.names = TRUE)</code></pre>
+<pre><code>## [1] &quot;./script/20150916.R&quot;</code></pre>
+<pre class="r"><code># create a recursive directory under DAE/Lab2, which stores the TXT data 
+# that will be read in Part III.
+if(!dir.exists(&quot;Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;))
+  dir.create(&quot;Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;, recursive = TRUE)
+
+# create a temporary directory under script
+if(!dir.exists(&quot;script/tmp&quot;)) dir.create(&quot;script/tmp&quot;)
+# create a temporary R script under tmp to say Hello World, Hello R!
+file.create(&quot;script/tmp/tmp.R&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>cat(&quot;print('Hello World, Hello R!')&quot;, file = &quot;script/tmp/tmp.R&quot;)
+# excute the R script
+source(&quot;script/tmp/tmp.R&quot;)</code></pre>
+<pre><code>## [1] &quot;Hello World, Hello R!&quot;</code></pre>
+<pre class="r"><code># copy tmp.R to helloworld.R
+file.copy(&quot;script/tmp/tmp.R&quot;, &quot;script/helloworld.R&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>list.files(&quot;script&quot;, recursive = TRUE)</code></pre>
+<pre><code>## [1] &quot;20150916.R&quot;   &quot;helloworld.R&quot; &quot;tmp/tmp.R&quot;</code></pre>
+<pre class="r"><code># rename helloworld.R to hello.R
+file.rename(&quot;script/helloworld.R&quot;, &quot;script/hello.R&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>list.files(&quot;script&quot;, recursive = TRUE)</code></pre>
+<pre><code>## [1] &quot;20150916.R&quot; &quot;hello.R&quot;    &quot;tmp/tmp.R&quot;</code></pre>
+<pre class="r"><code># delete all R scripts under script directory except for 20150916.R
+# attempt to delete inexistent hellworld.R
+file.remove(c(&quot;script/hello.R&quot;, &quot;script/helloworld.R&quot;))</code></pre>
+<pre><code>## Warning in file.remove(c(&quot;script/hello.R&quot;, &quot;script/helloworld.R&quot;)): cannot
+## remove file 'script/helloworld.R', reason 'No such file or directory'</code></pre>
+<pre><code>## [1]  TRUE FALSE</code></pre>
+<pre class="r"><code>list.files(&quot;script&quot;, recursive = TRUE)</code></pre>
+<pre><code>## [1] &quot;20150916.R&quot; &quot;tmp/tmp.R&quot;</code></pre>
+<pre class="r"><code># delete the temporary directory that is not empty.
+unlink(&quot;script/tmp&quot;, recursive = TRUE)
+list.files(&quot;script&quot;)</code></pre>
+<pre><code>## [1] &quot;20150916.R&quot;</code></pre>
+<p>To see all the file- and directory-related functions, type the following:</p>
 <pre><code>&gt; ?files</code></pre>
 </div>
-<div id="capturing-results-from-console" class="section level2">
-<h2>Capturing Results from Console</h2>
+<div id="part-ii-capturing-results-from-console" class="section level2">
+<h2>Part II Capturing Results from Console</h2>
 <p><code>print()</code></p>
 <p><code>sink()</code></p>
 </div>
-<div id="imports-and-exports" class="section level2">
-<h2>Imports and Exports</h2>
+<div id="part-iii-imports-and-exports" class="section level2">
+<h2>Part III Imports and Exports</h2>
 <p><code>read.table()</code>, <code>write.table()</code></p>
 <p><code>read.csv()</code>, <code>write.csv()</code></p>
 <p><code>read.xls()</code>, <code>write.xls()</code></p>
