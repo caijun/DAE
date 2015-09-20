@@ -63,21 +63,21 @@ file.info(list.files())
 ```
 ##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         340  TRUE  755 2015-09-20 20:02:48
+## Lab2                         306  TRUE  755 2015-09-20 20:06:53
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-20 20:02:40
+## script                       136  TRUE  755 2015-09-20 20:04:05
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
 ## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
-## Lab2                     2015-09-20 20:02:48 2015-09-20 20:02:40 501  20
+## Lab2                     2015-09-20 20:06:53 2015-09-20 20:04:05 501  20
 ## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-20 20:02:40 501  20
-## script                   2015-09-20 20:02:40 2015-09-20 20:02:40 501  20
+## reference                2015-09-16 13:27:58 2015-09-20 20:04:05 501  20
+## script                   2015-09-20 20:04:05 2015-09-20 20:04:05 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff
@@ -96,17 +96,13 @@ list.dirs()
 ```
 
 ```
-##  [1] "."                                                
-##  [2] "./Lab2"                                           
-##  [3] "./Lab2/data"                                      
-##  [4] "./Lab2/data/CMDSSS"                               
-##  [5] "./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0"     
-##  [6] "./Lab2/Lab2"                                      
-##  [7] "./Lab2/Lab2/data"                                 
-##  [8] "./Lab2/Lab2/data/CMDSSS"                          
-##  [9] "./Lab2/Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0"
-## [10] "./reference"                                      
-## [11] "./script"
+## [1] "."                                           
+## [2] "./Lab2"                                      
+## [3] "./Lab2/data"                                 
+## [4] "./Lab2/data/CMDSSS"                          
+## [5] "./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0"
+## [6] "./reference"                                 
+## [7] "./script"
 ```
 
 ```r
