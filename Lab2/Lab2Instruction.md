@@ -1,0 +1,86 @@
+# Lab2 Instruction
+Jun Cai  
+September 18, 2015  
+
+Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.
+
+## File and Directory Manipulation
+
+`setwd()` and `getwd()`: used to change or determine the current working directory.
+
+`list.files()`
+
+`file.create()`
+
+`file.exists()`: returns a logical vector indicating whether the given file exists for each name in the first argument, a character vector.
+
+`file.remove()`
+
+`file.copy()`
+
+`dir.create()`
+
+
+```r
+setwd("/Users/tonytsai/Documents/R/DAE")
+getwd()
+```
+
+```
+## [1] "/Users/tonytsai/Documents/R/DAE"
+```
+
+```r
+list.files()
+```
+
+```
+## [1] "Lab1note.pdf"             "Lab2"                    
+## [3] "Lecture1Introduction.pdf" "LICENSE"                 
+## [5] "README.md"                "reference"               
+## [7] "script"                   "生态数据分析课程大纲.pdf"
+```
+
+```r
+list.files(recursive = TRUE, pattern = ".R", full.names = TRUE)
+```
+
+```
+## [1] "./Lab2/Lab2Instruction.Rmd" "./script/20150916.R"
+```
+
+```r
+if(file.exists("READEME.html")) file.remove("README.html")
+```
+
+To see all the file- and directory-related functions, tyoe the following:
+
+```
+> ?files
+```
+
+## Capturing Results from Console
+
+`print()`
+
+`sink()`
+
+## Imports and Exports
+
+`read.table()`, `write.table()`
+
+`read.csv()`, `write.csv()`
+
+`read.xls()`, `write.xls()`
+
+`load()`, `save()`
+
+`data()`
+
+`read.dbf()`
+
+## References
+
+The following are materials on R data import/export that you can access on the Web.
+
+- [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.html)
