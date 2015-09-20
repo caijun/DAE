@@ -7,14 +7,50 @@ output:
     keep_md: yes
 ---
 
-Lab2 contains basics for exporting and importing data to and from R. Rather than a complete collection of functions for R data import/export, I will introduce the frequenty-used ways to importing and exporting data to and from R from my own R experience. Moreover, it will highlight the solutions to 
+Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.
 
-## Imports
+## File and Directory Manipulation
 
-R imports
+`setwd()`, `getwd()`
+
+```{r}
+setwd("")
+```
+
+`list.files()`
+
+`file.create()`
+
+`file.exists()`
+
+`file.remove()`
+
+`file.copy()`
+
+`dir.create()`
+
+## Capturing Results from Console
+
+`print()`
+
+`sink()`
+
+## Imports and Exports
+
+`read.table()`, `write.table()`
+
+`read.csv()`, `write.csv()`
+
+`read.xls()`, `write.xls()`
+
+`load()`, `save()`
+
+`data()`
+
+`read.dbf()`
 
 ## References
 
-The following is a list of materials on R data import/export that you can access on the Web.
+The following are materials on R data import/export that you can access on the Web.
 
 - [R Data Import/Export](https://cran.r-project.org/doc/manuals/r-release/R-data.html)
