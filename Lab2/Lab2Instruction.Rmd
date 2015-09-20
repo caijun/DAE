@@ -11,11 +11,21 @@ output:
     latex_engine: xelatex
 ---
 
+### Note
+
+- All R codes are present in boxes with grey background. You can run them in your R Console. Lines leading by `##` are outputs of R codes.
+
+- All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
+
+- The functions in **bold** are recommended to use.
+
+- The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my [GitHub](https://github.com/caijun/DAE/tree/master/Lab2). For your convenience, the data used and results produced in the Lab are also provided in the Github.
+
 Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.
 
-Note that all R codes in the following are run on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
-
 ## Part I File and Directory Manipulation
+
+R has a variety of functions for file and directory manipulation. The following are a few examples:
 
 `setwd()` and `getwd()`: used to change or determine the current working directory. It's a good habit to set working directory before your data analysis as all results during your data analysis will be stored in the working directory.
 
@@ -76,29 +86,66 @@ list.files("script")
 
 To see all the file- and directory-related functions, type the following:
 
+```{r, eval=FALSE}
+?files
 ```
-> ?files
+
+## Part II Capturing R Console Output
+
+R provides functions to save the results that appear in your R Console into a text file.
+
+`sink()`: diverts R output to a file connection.
+
+**`capture.output()`**: sends R output to a character string or file connection.
+
+```{r, eval=FALSE}
+# type following codes in your Console
+# divert R output to CO2.txt under data directory
+sink(file = "data/CO2.txt")
+# load R built-in dataset CO2. type ?CO2 to see the decription about CO2 dataset.
+data("CO2")
+# divert the first 7 rows of CO2
+head(CO2, 7)
+# end the divertion
+sink()
 ```
 
-## Part II Capturing Results from Console
+```{r}
+# sink() does not work in knitr, because it is already used internally to capture 
+# results. To make it work, you have to use {} wrap up all aboving code in a 
+# single expression and print results to Console explicitly.
+{
+  sink(file = "data/CO2.txt")
+  data("CO2")
+  print(head(CO2, 7))
+  sink()
+}
+# the content of CO2.txt will be checked in Part III.
+```
 
-`print()`
-
-`sink()`
+```{r}
+# generate a vector containing a numeric sequence from 1 to 10
+1:10
+# send the output to variable x
+x <- capture.output(1:10)
+x
+# divert the first 7 rows of CO2 dataset to CO2.txt
+capture.output(head(CO2, 7), file = "data/CO2.txt")
+```
 
 ## Part III Imports and Exports
 
-`read.table()`, `write.table()`
+`read.table()` and `write.table()`:
 
-`read.csv()`, `write.csv()`
+`read.csv()` and `write.csv()`:
 
-`read.xls()`, `write.xls()`
+`read.xls()` and `write.xls()`:
 
-`load()`, `save()`
+`read.dbf()` and `write.dbf()`:
 
-`data()`
+`load()` and `save()`:
 
-`read.dbf()`
+`data()`:
 
 ## References
 

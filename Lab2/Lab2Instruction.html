@@ -74,10 +74,19 @@ img {
 </div>
 
 
+<div id="note" class="section level3">
+<h3>Note</h3>
+<ul>
+<li><p>All R codes are present in boxes with grey background. You can run them in your R Console. Lines leading by <code>##</code> are outputs of R codes.</p></li>
+<li><p>All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.</p></li>
+<li><p>The functions in <strong>bold</strong> are recommended to use.</p></li>
+<li><p>The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my <a href="https://github.com/caijun/DAE/tree/master/Lab2">GitHub</a>. For your convenience, the data used and results produced in the Lab are also provided in the Github.</p></li>
+</ul>
 <p>Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.</p>
-<p>Note that all R codes in the following are run on my own Mac OS X. When you try them on your own computer, please customize your own working directory.</p>
+</div>
 <div id="part-i-file-and-directory-manipulation" class="section level2">
 <h2>Part I File and Directory Manipulation</h2>
+<p>R has a variety of functions for file and directory manipulation. The following are a few examples:</p>
 <p><code>setwd()</code> and <code>getwd()</code>: used to change or determine the current working directory. It’s a good habit to set working directory before your data analysis as all results during your data analysis will be stored in the working directory.</p>
 <p><code>list.files()</code> and <code>list.dirs()</code>: returns a character vector of names of files or directories under the given directory.</p>
 <p><code>file.info()</code>: gives file size, creation time, directory vs. ordinary file status, and so on for each file whose name is in the argument, a character vector.</p>
@@ -99,21 +108,21 @@ list.files()</code></pre>
 file.info(list.files())</code></pre>
 <pre><code>##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         306  TRUE  755 2015-09-20 16:11:44
+## Lab2                         340  TRUE  755 2015-09-20 20:02:48
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-20 16:11:36
+## script                       136  TRUE  755 2015-09-20 20:02:40
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
-## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:23 501  20
-## Lab2                     2015-09-20 16:11:44 2015-09-20 16:11:36 501  20
+## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
+## Lab2                     2015-09-20 20:02:48 2015-09-20 20:02:40 501  20
 ## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-20 16:11:36 501  20
-## script                   2015-09-20 16:11:36 2015-09-20 16:11:36 501  20
+## reference                2015-09-16 13:27:58 2015-09-20 20:02:40 501  20
+## script                   2015-09-20 20:02:40 2015-09-20 20:02:40 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff
@@ -126,13 +135,17 @@ file.info(list.files())</code></pre>
 ## 生态数据分析课程大纲.pdf tonytsai  staff</code></pre>
 <pre class="r"><code># list only directories under DAE
 list.dirs()</code></pre>
-<pre><code>## [1] &quot;.&quot;                                           
-## [2] &quot;./Lab2&quot;                                      
-## [3] &quot;./Lab2/data&quot;                                 
-## [4] &quot;./Lab2/data/CMDSSS&quot;                          
-## [5] &quot;./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;
-## [6] &quot;./reference&quot;                                 
-## [7] &quot;./script&quot;</code></pre>
+<pre><code>##  [1] &quot;.&quot;                                                
+##  [2] &quot;./Lab2&quot;                                           
+##  [3] &quot;./Lab2/data&quot;                                      
+##  [4] &quot;./Lab2/data/CMDSSS&quot;                               
+##  [5] &quot;./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;     
+##  [6] &quot;./Lab2/Lab2&quot;                                      
+##  [7] &quot;./Lab2/Lab2/data&quot;                                 
+##  [8] &quot;./Lab2/Lab2/data/CMDSSS&quot;                          
+##  [9] &quot;./Lab2/Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0&quot;
+## [10] &quot;./reference&quot;                                      
+## [11] &quot;./script&quot;</code></pre>
 <pre class="r"><code># find all R scripts under DAE and give their full path names (or absolute paths)
 list.files(recursive = TRUE, pattern = &quot;.R$&quot;, full.names = TRUE)</code></pre>
 <pre><code>## [1] &quot;./script/20150916.R&quot;</code></pre>
@@ -173,21 +186,50 @@ unlink(&quot;script/tmp&quot;, recursive = TRUE)
 list.files(&quot;script&quot;)</code></pre>
 <pre><code>## [1] &quot;20150916.R&quot;</code></pre>
 <p>To see all the file- and directory-related functions, type the following:</p>
-<pre><code>&gt; ?files</code></pre>
+<pre class="r"><code>?files</code></pre>
 </div>
-<div id="part-ii-capturing-results-from-console" class="section level2">
-<h2>Part II Capturing Results from Console</h2>
-<p><code>print()</code></p>
-<p><code>sink()</code></p>
+<div id="part-ii-capturing-r-console-output" class="section level2">
+<h2>Part II Capturing R Console Output</h2>
+<p>R provides functions to save the results that appear in your R Console into a text file.</p>
+<p><code>sink()</code>: diverts R output to a file connection.</p>
+<p><strong><code>capture.output()</code></strong>: sends R output to a character string or file connection.</p>
+<pre class="r"><code># type following codes in your Console
+# divert R output to CO2.txt under data directory
+sink(file = &quot;data/CO2.txt&quot;)
+# load R built-in dataset CO2. type ?CO2 to see the decription about CO2 dataset.
+data(&quot;CO2&quot;)
+# divert the first 7 rows of CO2
+head(CO2, 7)
+# end the divertion
+sink()</code></pre>
+<pre class="r"><code># sink() does not work in knitr, because it is already used internally to capture 
+# results. To make it work, you have to use {} wrap up all aboving code in a 
+# single expression and print results to Console explicitly.
+{
+  sink(file = &quot;data/CO2.txt&quot;)
+  data(&quot;CO2&quot;)
+  print(head(CO2, 7))
+  sink()
+}
+# the content of CO2.txt will be checked in Part III.</code></pre>
+<pre class="r"><code># generate a vector containing a numeric sequence from 1 to 10
+1:10</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code># send the output to variable x
+x &lt;- capture.output(1:10)
+x</code></pre>
+<pre><code>## [1] &quot; [1]  1  2  3  4  5  6  7  8  9 10&quot;</code></pre>
+<pre class="r"><code># divert the first 7 rows of CO2 dataset to CO2.txt
+capture.output(head(CO2, 7), file = &quot;data/CO2.txt&quot;)</code></pre>
 </div>
 <div id="part-iii-imports-and-exports" class="section level2">
 <h2>Part III Imports and Exports</h2>
-<p><code>read.table()</code>, <code>write.table()</code></p>
-<p><code>read.csv()</code>, <code>write.csv()</code></p>
-<p><code>read.xls()</code>, <code>write.xls()</code></p>
-<p><code>load()</code>, <code>save()</code></p>
-<p><code>data()</code></p>
-<p><code>read.dbf()</code></p>
+<p><code>read.table()</code> and <code>write.table()</code>:</p>
+<p><code>read.csv()</code> and <code>write.csv()</code>:</p>
+<p><code>read.xls()</code> and <code>write.xls()</code>:</p>
+<p><code>read.dbf()</code> and <code>write.dbf()</code>:</p>
+<p><code>load()</code> and <code>save()</code>:</p>
+<p><code>data()</code>:</p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>

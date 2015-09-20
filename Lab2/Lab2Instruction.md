@@ -2,11 +2,21 @@
 Jun Cai  
 September 18, 2015  
 
+### Note
+
+- All R codes are present in boxes with grey background. You can run them in your R Console. Lines leading by `##` are outputs of R codes.
+
+- All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
+
+- The functions in **bold** are recommended to use.
+
+- The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my [GitHub](https://github.com/caijun/DAE/tree/master/Lab2). For your convenience, the data used and results produced in the Lab are also provided in the Github.
+
 Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.
 
-Note that all R codes in the following are run on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
-
 ## Part I File and Directory Manipulation
+
+R has a variety of functions for file and directory manipulation. The following are a few examples:
 
 `setwd()` and `getwd()`: used to change or determine the current working directory. It's a good habit to set working directory before your data analysis as all results during your data analysis will be stored in the working directory.
 
@@ -53,21 +63,21 @@ file.info(list.files())
 ```
 ##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         306  TRUE  755 2015-09-20 16:11:44
+## Lab2                         340  TRUE  755 2015-09-20 20:02:48
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-20 16:11:36
+## script                       136  TRUE  755 2015-09-20 20:02:40
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
-## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:23 501  20
-## Lab2                     2015-09-20 16:11:44 2015-09-20 16:11:36 501  20
+## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
+## Lab2                     2015-09-20 20:02:48 2015-09-20 20:02:40 501  20
 ## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-20 16:11:36 501  20
-## script                   2015-09-20 16:11:36 2015-09-20 16:11:36 501  20
+## reference                2015-09-16 13:27:58 2015-09-20 20:02:40 501  20
+## script                   2015-09-20 20:02:40 2015-09-20 20:02:40 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff
@@ -86,13 +96,17 @@ list.dirs()
 ```
 
 ```
-## [1] "."                                           
-## [2] "./Lab2"                                      
-## [3] "./Lab2/data"                                 
-## [4] "./Lab2/data/CMDSSS"                          
-## [5] "./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0"
-## [6] "./reference"                                 
-## [7] "./script"
+##  [1] "."                                                
+##  [2] "./Lab2"                                           
+##  [3] "./Lab2/data"                                      
+##  [4] "./Lab2/data/CMDSSS"                               
+##  [5] "./Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0"     
+##  [6] "./Lab2/Lab2"                                      
+##  [7] "./Lab2/Lab2/data"                                 
+##  [8] "./Lab2/Lab2/data/CMDSSS"                          
+##  [9] "./Lab2/Lab2/data/CMDSSS/SURF_CLI_CHN_MUL_DAY_V3.0"
+## [10] "./reference"                                      
+## [11] "./script"
 ```
 
 ```r
@@ -199,29 +213,84 @@ list.files("script")
 
 To see all the file- and directory-related functions, type the following:
 
+
+```r
+?files
 ```
-> ?files
+
+## Part II Capturing R Console Output
+
+R provides functions to save the results that appear in your R Console into a text file.
+
+`sink()`: diverts R output to a file connection.
+
+**`capture.output()`**: sends R output to a character string or file connection.
+
+
+```r
+# type following codes in your Console
+# divert R output to CO2.txt under data directory
+sink(file = "data/CO2.txt")
+# load R built-in dataset CO2. type ?CO2 to see the decription about CO2 dataset.
+data("CO2")
+# divert the first 7 rows of CO2
+head(CO2, 7)
+# end the divertion
+sink()
 ```
 
-## Part II Capturing Results from Console
 
-`print()`
+```r
+# sink() does not work in knitr, because it is already used internally to capture 
+# results. To make it work, you have to use {} wrap up all aboving code in a 
+# single expression and print results to Console explicitly.
+{
+  sink(file = "data/CO2.txt")
+  data("CO2")
+  print(head(CO2, 7))
+  sink()
+}
+# the content of CO2.txt will be checked in Part III.
+```
 
-`sink()`
+
+```r
+# generate a vector containing a numeric sequence from 1 to 10
+1:10
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+```r
+# send the output to variable x
+x <- capture.output(1:10)
+x
+```
+
+```
+## [1] " [1]  1  2  3  4  5  6  7  8  9 10"
+```
+
+```r
+# divert the first 7 rows of CO2 dataset to CO2.txt
+capture.output(head(CO2, 7), file = "data/CO2.txt")
+```
 
 ## Part III Imports and Exports
 
-`read.table()`, `write.table()`
+`read.table()` and `write.table()`:
 
-`read.csv()`, `write.csv()`
+`read.csv()` and `write.csv()`:
 
-`read.xls()`, `write.xls()`
+`read.xls()` and `write.xls()`:
 
-`load()`, `save()`
+`read.dbf()` and `write.dbf()`:
 
-`data()`
+`load()` and `save()`:
 
-`read.dbf()`
+`data()`:
 
 ## References
 
