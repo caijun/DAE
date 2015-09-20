@@ -63,21 +63,21 @@ file.info(list.files())
 ```
 ##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         306  TRUE  755 2015-09-21 01:15:56
+## Lab2                         306  TRUE  755 2015-09-21 01:18:19
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-21 01:15:46
+## script                       136  TRUE  755 2015-09-21 01:18:16
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
 ## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
-## Lab2                     2015-09-21 01:15:56 2015-09-21 01:15:46 501  20
+## Lab2                     2015-09-21 01:18:19 2015-09-21 01:18:16 501  20
 ## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-21 01:15:46 501  20
-## script                   2015-09-21 01:15:46 2015-09-21 01:15:46 501  20
+## reference                2015-09-16 13:27:58 2015-09-21 01:18:16 501  20
+## script                   2015-09-21 01:18:16 2015-09-21 01:18:16 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff
@@ -418,7 +418,7 @@ ls()
 
 ### Demostration
 
-The `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of **SURF_CLI_CHN_MUL_DAY** v3.0 produced by [CMDSSS](http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger). The following code demostrates how to preprocess the **SURF_CLI_CHN_MUL_DAY** dataset and extract your desired data in R.
+The `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of **SURF_CLI_CHN_MUL_DAY** v3.0 produced by [CMDSSS](http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger). The following code demostrates how to preprocess the **SURF_CLI_CHN_MUL_DAY** dataset and extract your desired data in R, which is from my own research.
 
 
 ```r

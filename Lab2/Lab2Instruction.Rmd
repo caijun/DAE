@@ -3,12 +3,12 @@ title: "Lab2 Instruction"
 author: "Jun Cai"
 date: "September 18, 2015"
 output:
-  html_document:
-    keep_md: yes
   pdf_document:
     includes:
       in_header: header.tex
     latex_engine: xelatex
+  html_document:
+    keep_md: yes
 ---
 
 ### Note
@@ -209,7 +209,7 @@ ls()
 
 ### Demostration
 
-The `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of **SURF_CLI_CHN_MUL_DAY** v3.0 produced by [CMDSSS](http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger). The following code demostrates how to preprocess the **SURF_CLI_CHN_MUL_DAY** dataset and extract your desired data in R.
+The `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of **SURF_CLI_CHN_MUL_DAY** v3.0 produced by [CMDSSS](http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger). The following code demostrates how to preprocess the **SURF_CLI_CHN_MUL_DAY** dataset and extract your desired data in R, which is from my own research.
 
 ```{r}
 # use read.table to read dataset in TXT
