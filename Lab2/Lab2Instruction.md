@@ -8,7 +8,7 @@ September 18, 2015
 
 - All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
 
-- The functions in **bold** are recommended to use.
+- The functions in **bold** are recommended to use in your data analysis.
 
 - The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my [GitHub](https://github.com/caijun/DAE/tree/master/Lab2). For your convenience, the data used and results produced in the Lab are also provided in the Github.
 
@@ -63,21 +63,21 @@ file.info(list.files())
 ```
 ##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         306  TRUE  755 2015-09-21 01:18:19
+## Lab2                         306  TRUE  755 2015-09-21 10:15:09
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-21 01:18:16
+## script                       136  TRUE  755 2015-09-21 10:14:59
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
 ## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
-## Lab2                     2015-09-21 01:18:19 2015-09-21 01:18:16 501  20
+## Lab2                     2015-09-21 10:15:09 2015-09-21 10:14:59 501  20
 ## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-21 01:18:16 501  20
-## script                   2015-09-21 01:18:16 2015-09-21 01:18:16 501  20
+## reference                2015-09-16 13:27:58 2015-09-21 10:14:59 501  20
+## script                   2015-09-21 10:14:59 2015-09-21 10:14:59 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff
@@ -525,6 +525,21 @@ str(x)
 ##  $ maxT : num  25.9 22.5 29.4 32.9 29.2 28.7 28.1 29.1 28.9 28.2 ...
 ##  $ minT : num  20.1 18.6 12.7 15.1 17.4 19.1 20.4 12.3 13.3 15.6 ...
 ##  $ ymd  : POSIXct, format: "2014-09-01 12:00:00" "2014-09-02 12:00:00" ...
+```
+
+```r
+# summaries of meanT, maxT, and minT
+summary(x[, c("meanT", "maxT", "minT")])
+```
+
+```
+##      meanT            maxT            minT      
+##  Min.   :10.20   Min.   :14.60   Min.   : 6.80  
+##  1st Qu.:17.10   1st Qu.:22.57   1st Qu.:12.22  
+##  Median :19.45   Median :25.25   Median :14.85  
+##  Mean   :19.04   Mean   :25.04   Mean   :14.52  
+##  3rd Qu.:20.60   3rd Qu.:28.05   3rd Qu.:16.77  
+##  Max.   :23.50   Max.   :32.90   Max.   :20.40
 ```
 
 ```r

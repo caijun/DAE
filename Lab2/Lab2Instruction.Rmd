@@ -3,12 +3,12 @@ title: "Lab2 Instruction"
 author: "Jun Cai"
 date: "September 18, 2015"
 output:
+  html_document:
+    keep_md: yes
   pdf_document:
     includes:
       in_header: header.tex
     latex_engine: xelatex
-  html_document:
-    keep_md: yes
 ---
 
 ### Note
@@ -17,7 +17,7 @@ output:
 
 - All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
 
-- The functions in **bold** are recommended to use.
+- The functions in **bold** are recommended to use in your data analysis.
 
 - The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my [GitHub](https://github.com/caijun/DAE/tree/master/Lab2). For your convenience, the data used and results produced in the Lab are also provided in the Github.
 
@@ -260,6 +260,9 @@ str(data)
 # extract data collected from Miyun station whose id is 54416 and discard quality control codes
 x <- subset(data[, !names(data) %in% c("meanQC", "maxQC", "minQC")], id == 54416)
 str(x)
+# summaries of meanT, maxT, and minT
+summary(x[, c("meanT", "maxT", "minT")])
+
 # save the extracted data to external file for further data analysis
 save(x, file = "data/Miyun-TEM-201409.RData")
 ```
