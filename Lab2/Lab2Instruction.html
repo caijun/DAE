@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-<meta name="author" content="Jun Cai" />
 
 <meta name="date" content="2015-09-18" />
 
@@ -69,20 +68,18 @@ img {
 
 <div id="header">
 <h1 class="title">Lab2 Instruction</h1>
-<h4 class="author"><em>Jun Cai</em></h4>
 <h4 class="date"><em>September 18, 2015</em></h4>
 </div>
 
 
+<p>Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, only these frequently used functions are mentioned in this instruction.</p>
 <div id="note" class="section level3">
 <h3>Note</h3>
 <ul>
-<li><p>All R codes are present in boxes with grey background. You can run them in your R Console. Lines leading by <code>##</code> are outputs of R codes.</p></li>
-<li><p>All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.</p></li>
+<li><p>All R codes are present in boxes with grey background, in which lines leading by <code>#</code> will be treated as comments by R. You can run them in your R Console. Lines leading by <code>##</code> are outputs of R codes.</p></li>
 <li><p>The functions in <strong>bold</strong> are recommended to use in your data analysis.</p></li>
-<li><p>The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my <a href="https://github.com/caijun/DAE/tree/master/Lab2">GitHub</a>. For your convenience, the data used and results generated in the Lab are also provided in the Github.</p></li>
+<li><p>The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on <a href="https://github.com/caijun/DAE/tree/master/Lab2" class="uri">https://github.com/caijun/DAE/tree/master/Lab2</a>. For your convenience, the data used and results generated in the Lab are also provided. You can also download data from the course website. It is a zip file named <strong>Lab2data</strong>.</p></li>
 </ul>
-<p>Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.</p>
 </div>
 <div id="part-i-file-and-directory-manipulation" class="section level2">
 <h2>Part I File and Directory Manipulation</h2>
@@ -108,21 +105,21 @@ list.files()</code></pre>
 file.info(list.files())</code></pre>
 <pre><code>##                             size isdir mode               mtime
 ## Lab1note.pdf              553464 FALSE  777 2015-09-20 12:59:30
-## Lab2                         306  TRUE  755 2015-09-21 10:15:38
+## Lab2                         476  TRUE  755 2015-09-22 17:05:55
 ## Lecture1Introduction.pdf 1134795 FALSE  640 2015-09-20 12:59:16
 ## LICENSE                     1077 FALSE  644 2015-09-18 09:40:04
 ## README.md                    244 FALSE  644 2015-09-18 09:58:11
 ## reference                    170  TRUE  777 2015-09-16 11:22:01
-## script                       136  TRUE  755 2015-09-21 10:15:36
+## script                       136  TRUE  755 2015-09-22 17:05:53
 ## 生态数据分析课程大纲.pdf  253722 FALSE  777 2015-09-12 18:07:12
 ##                                        ctime               atime uid gid
-## Lab1note.pdf             2015-09-20 14:24:21 2015-09-20 14:24:19 501  20
-## Lab2                     2015-09-21 10:15:38 2015-09-21 10:15:36 501  20
-## Lecture1Introduction.pdf 2015-09-20 12:59:29 2015-09-20 12:59:15 501  20
+## Lab1note.pdf             2015-09-20 14:24:21 2015-09-22 16:54:47 501  20
+## Lab2                     2015-09-22 17:05:55 2015-09-22 17:05:53 501  20
+## Lecture1Introduction.pdf 2015-09-22 16:31:32 2015-09-22 16:31:31 501  20
 ## LICENSE                  2015-09-18 09:42:06 2015-09-20 12:49:52 501  20
 ## README.md                2015-09-18 09:58:11 2015-09-18 09:58:04 501  20
-## reference                2015-09-16 13:27:58 2015-09-21 10:12:32 501  20
-## script                   2015-09-21 10:15:36 2015-09-21 10:15:36 501  20
+## reference                2015-09-16 13:27:58 2015-09-22 17:05:53 501  20
+## script                   2015-09-22 17:05:53 2015-09-22 17:05:53 501  20
 ## 生态数据分析课程大纲.pdf 2015-09-16 13:27:58 2015-09-16 13:27:58 501  20
 ##                             uname grname
 ## Lab1note.pdf             tonytsai  staff

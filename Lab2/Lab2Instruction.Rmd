@@ -1,7 +1,5 @@
 ---
 title: "Lab2 Instruction"
-author: "Jun Cai"
-date: "September 18, 2015"
 output:
   pdf_document:
     includes:
@@ -9,25 +7,24 @@ output:
     latex_engine: xelatex
   html_document:
     keep_md: yes
+date: "September 18, 2015"
 ---
+
+Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, only these frequently used functions are mentioned in this instruction.
 
 ### Note
 
-- All R codes are present in boxes with grey background. You can run them in your R Console. Lines leading by `##` are outputs of R codes.
-
-- All R codes are run correctly on my own Mac OS X. When you try them on your own computer, please customize your own working directory.
+- All R codes are present in boxes with grey background, in which lines leading by `#` will be treated as comments by R. You can run them in your R Console. Lines leading by `##` are outputs of R codes.
 
 - The functions in **bold** are recommended to use in your data analysis.
 
-- The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on my [GitHub](https://github.com/caijun/DAE/tree/master/Lab2). For your convenience, the data used and results generated in the Lab are also provided in the Github.
+- The Lab Instruction in different formats including .Rmd, .md, .html and .pdf are available on [https://github.com/caijun/DAE/tree/master/Lab2](https://github.com/caijun/DAE/tree/master/Lab2). For your convenience, an R script named *Lab2Instruction.R* that contains all R codes occurred in the Lab is provided. The data used and results generated in the Lab are also provided. You can also download data from the course website. It is a zip file named *Lab2data*.
 
-Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, I will introduce the frequenty-used functions from my own R experience.
+## Part I File and Directory Manipulations
 
-## Part I File and Directory Manipulation
+R has a variety of functions for file and directory manipulations. The following are a few examples:
 
-R has a variety of functions for file and directory manipulation. The following are a few examples:
-
-`setwd()` and `getwd()`: used to change or determine the current working directory. It's a good habit to set working directory before your data analysis as all results during your data analysis will be stored in the working directory.
+`setwd()` and `getwd()`: used to change or determine the current working directory. It's a good habit to set working directory before your data analysis as all results generated in your analysis will be stored in the working directory.
 
 `list.files()` and `list.dirs()`: returns a character vector of names of files or directories under the given directory.
 
@@ -41,43 +38,79 @@ R has a variety of functions for file and directory manipulation. The following 
 
 `file.remove()` and **`unlink()`**: deletes the files or directories specified by the first argument, a character vector.
 
+```{r, eval=FALSE}
+# set your working directory to Lab2
+setwd("your/path/to/Lab2")
+```
+If you're working on Windows, you can set your working directory like `E:/R/DAE/Lab2`; or you're a Unix-like (such as Linux, Mac) OS user, your working directory can be something like `~/Documents/R/DAE/Lab2`. `getwd()` returns current working directory and you can use it to check whether your working directory is correctly set.
 ```{r}
-# set current working directory to DAE
-setwd("/Users/tonytsai/Documents/R/DAE")
 getwd()
-
-# list all files including directories under current working directory DAE
+```
+Now you can use the aforementioned functions to manipulate files and directories under `Lab2`. Let's first use `list.files()` to see what `Lab2` contains.
+```{r}
+# list all files including directories under current working directory
 list.files()
+```
+`list.files()` lists all files including directories under `Lab2`. Assume you're only interested in directories, you have to determine which of those are directories. `file.info()` can give you the file status that you need.
+```{r}
 # extract file information for those files
 file.info(list.files())
-# list only directories under DAE
+```
+In the above command, the character vector of the names of files and directories returned by `list.files()` is used as the first argument of `file.info()`. `isdir` in the output file status indicates whether the file is a directory. You can use `list.dirs()` to filter only those directories.
+```{r}
+# list only directories under current working directory
 list.dirs()
-# find all R scripts under DAE and give their full path names (or absolute paths)
+```
+`.` represents the current directory `Lab2`. Since the argument `recursive` in `list.dirs()` is defaultly set `TRUE`, you can see that `CMDSSS`, the directory under subdirectory `data`, is also listed out.
+
+Another usage of `list.files()` is to find specific files under a given directory. For example, we want to find all R scripts under Lab2.
+```{r}
+# find all R scripts under Lab2 and give their full path names (or absolute paths)
 list.files(recursive = TRUE, pattern = ".R$", full.names = TRUE)
+```
+The argument `recursive = TRUE` means to search R scripts not only in current directory, but also in subdirectories. The argument `pattern` is usually a [regular expression](https://en.wikipedia.org/wiki/Regular_expression), which means only file names that match the regular expression will be returned. Here `pattern = ".R$"` filters those files that end with `.R"`. The argument `full.names = TRUE` returns the full path that the directory path is prepended to the file name. Turn `full.names` to `FALSE` and only the file name is returned.
 
-# create a recursive directory under DAE/Lab2, which stores the TXT data 
-# that will be read in Part III.
-if(!dir.exists("Lab2/data/CMDSSS"))
-  dir.create("Lab2/data/CMDSSS", recursive = TRUE)
+During data analysis, it's common to create directories to write resutls. The following R code creates a recursive directory under Lab2 to store the TXT data, which will be used in Part III.
+```{r}
+if(!dir.exists("data/CMDSSS"))
+  dir.create("data/CMDSSS", recursive = TRUE)
+```
+We first use `dir.exists()` to check whether the directories to be created is existed. Make sure that they are not existed, we use `dir.create()` to create the recursive directories, otherwise there is no need to do such a directory creation.
 
+Next we would like to create a temporary R script udner `script` to say hello to R.
+
+First, we create a temporary subdirectory named `tmp` under directory `script`, in which we further create a temporary R script named `tmp.R`.
+```{r}
 # create a temporary directory under script
 if(!dir.exists("script/tmp")) dir.create("script/tmp")
 # create a temporary R script under tmp to say Hello World, Hello R!
 file.create("script/tmp/tmp.R")
+```
+The `TRUE` value returned by `file.create()` indicates that the file `tmp.R` is successfully created. 
+
+Then, we can use `cat()` to ouput the R command `print('Hello World, Hello R!')`, which will print out "Hello World, Hello R!" on the R Console, to the file `tmp.R`.
+```{r}
 cat("print('Hello World, Hello R!')", file = "script/tmp/tmp.R")
-# excute the R script
+```
+`source()` can read R code from a file or a connection and evaluate the parsed expressions sequentially.  To excute the R code in `tmp.R`, type the following:
+```{r}
 source("script/tmp/tmp.R")
 
-# copy tmp.R to helloworld.R
+# copy tmp.R as helloworld.R in a differnt place
 file.copy("script/tmp/tmp.R", "script/helloworld.R")
 list.files("script", recursive = TRUE)
 # rename helloworld.R to hello.R
 file.rename("script/helloworld.R", "script/hello.R")
 list.files("script", recursive = TRUE)
 
-# delete all R scripts under script directory except for 20150916.R
-# attempt to delete inexistent hellworld.R
+# delete all R scripts under script directory except for Lab2Instructon.R
+# attempt to delete inexistent helloworld.R
 file.remove(c("script/hello.R", "script/helloworld.R"))
+```
+Here, a character of two file paths is given to `file.remove()` and a logical vector of two elements is returned. As the second file path points to the inexistent `helloworld.R`, the corresponding `FALSE` indicates that the file deletion is failed. And a warning of "No such file or directory" is thrown to show the reason why failed to delete the file. 
+
+The following R code shows how to delete a directoty that is not empty. We can see that the `tmp` directory contains `tmp.R`. To delete such a directory, we can use `unlink()` with the argument `recursive` to be `TRUE`.
+```{r}
 list.files("script", recursive = TRUE)
 # delete the temporary directory that is not empty.
 unlink("script/tmp", recursive = TRUE)
@@ -98,9 +131,9 @@ R provides functions to save the results that appear in your R Console into a te
 
 **`capture.output()`**: sends R output to a character string or file connection.
 
+Create a new R script and type following codes. You're encouraged to write R codes in R script rather R Console as you can accumulate your R codes and easily modify them. Usually, you can type handy R functions and short R codes in R Console for interactive check.
 ```{r, eval=FALSE}
-# type following codes in your Console
-# divert R output to CO2.txt under data directory
+# divert R output to CO2.txt under data
 sink(file = "data/CO2.txt")
 # load R built-in dataset CO2. type ?CO2 to see the decription about CO2 dataset.
 data("CO2")
@@ -109,8 +142,8 @@ head(CO2, 14)
 # end the divertion
 sink()
 ```
-
-```{r}
+Source the R script after saving it. `head(CO2, 14)` returns the first 14 rows of data.frame `CO2`, while you see the outputs is not displayed on R Console as the code is between `sink()`. Instead, the outputs are diverted into the file *CO2.txt*. It's always good to sink the outputs of your R codes into a file, particularly when it's time-consuming to run the R script once.
+```{r, include=FALSE}
 # sink() does not work in knitr, because it is already used internally to capture 
 # results. To make it work, you have to use {} wrap up all aboving code in a 
 # single expression and print results to Console explicitly.
@@ -122,14 +155,20 @@ sink()
 }
 # the content of CO2.txt will be checked in Part III.
 ```
-
+The following R command generates a vector containing a numeric sequence from 1 to 10.
 ```{r}
-# generate a vector containing a numeric sequence from 1 to 10
 1:10
+```
+The R Console prints out 10 integers. We can use `capture.output()` to capture the output and asign it to a variable `x`.
+```{r}
 # send the output to variable x
 x <- capture.output(1:10)
 x
-# divert the first 14 rows of CO2 dataset to CO2.txt
+```
+Printing out `x`, we can see variable `x` is a character string containing all the outputs returned by evaluating `1:10` including `[1]`.
+
+Using `capture.output()` to divert the first 14 rows of data.frame `CO2` to *CO2.txt* is much easily done.
+```{r}
 capture.output(head(CO2, 14), file = "data/CO2.txt")
 ```
 
@@ -141,7 +180,7 @@ Here I list some functions in R for reading and storing data in common formats, 
 
 **`read.csv()`** and **`write.csv()`**: reads a CSV file and creates a data frame from it. A standard [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file actually stores tabular data in plain text with values separated by comma.
 
-`read.xlsx()` and `write.xlsx()`: reads and writes Excel 2007 and Excel 97/2000/XP/2003 files. They are from [xlsx](https://cran.r-project.org/web/packages/xlsx/index.html) package. There are some other packages for reading or/and Excel files, such as [openxlsx](https://cran.r-project.org/web/packages/openxlsx/index.html), [XLConnect](https://cran.r-project.org/web/packages/XLConnect/index.html), [readxl](https://cran.r-project.org/web/packages/readxl/index.html) and [WriteXLS](https://cran.r-project.org/web/packages/WriteXLS/index.html). Frankly, I am not used to reading and writing Excel files. I usually process Excel files by saving them as CSV files.
+`read.xlsx()` and `write.xlsx()`: reads and writes Excel 2007 and Excel 97/2000/XP/2003 files. They are from [xlsx](https://cran.r-project.org/web/packages/xlsx/index.html) package. There are some other packages for reading or/and Excel files, such as [openxlsx](https://cran.r-project.org/web/packages/openxlsx/index.html), [XLConnect](https://cran.r-project.org/web/packages/XLConnect/index.html), [readxl](https://cran.r-project.org/web/packages/readxl/index.html) and [WriteXLS](https://cran.r-project.org/web/packages/WriteXLS/index.html). Excel files do not work smoothly in many data processing software so CSV is a preferred format to save your data in MS Excel. 
 
 `read.dbf()` and `write.dbf()`: reads and writes dBase files. They are from [foreign](https://cran.r-project.org/web/packages/foreign/index.html) package, which provides functions for reading and writing data stored by Minitab, S, SAS, SPSS, Stata, dBase, .... The reason why I specially introduce how to read dBase files is that the attribute table of shape file is stored in .dbf format.
 
@@ -149,43 +188,61 @@ Here I list some functions in R for reading and storing data in common formats, 
 
 `data()`: loads specified data sets, or list the available data sets.
 
+Now we use `read.table()` to read in *CO2.txt* to check the outputs of `sink()` in Part II.
 ```{r}
 # read data in Plain Text
 txt <- read.table(file = "data/CO2.txt")
-# check the content of CO2.txt
+```
+`str()` is a handy function for compactly display the structure of an arbitrary R object. Before manipulating an R object, it's always good to use `str` to show its structure, especially for those R objects that you aren't familar with.
+```{r}
 str(txt)
-# exttract data of Qn1 plant
+```
+We can see `txt` is a data.frame with 14 observations of 5 variables. For data.frame, a row represents an observation and a column represetn a variable. Hence, the data.frame `txt` has a size of 14 rows by 5 columns. The class of each variable and their values are also shown. Among which, the variable `Plant` has is a factor with two value levels of `Qn1` and `Qn2`. Suppose that only `Qn1` plant is of interest. We can use `subset()` to extract data of `Qn1` plant.
+```{r}
 Qn1 <- subset(txt, Plant == "Qn1")
+```
+The first argument `txt` is the object to be subsetted, and the second argument `Plant == "Qn1"` is a logical expression indicating that rows with `Plant` equal to `Qn1` are kept.
+```{r}
 # save Qn1 to .txt. 
 # Though the file extension is .txt, the data is actually stored in a CSV format.
 write.table(Qn1, file = "data/CO2-Qn1.txt", row.names = FALSE, quote = FALSE, sep = ",")
-
+```
+The argument `row.names = FALSE` indicates the row names of `Qn1` aren't to be written. The argument `quote = FALSE` represents the character or factor columns will not be surrounded by double quotes. It's necessary to turn `quote` to `TRUE` when the character column self contains the field separater. For example, the character variable `address` usually contains the field separater of CSV `,`. The argument `sep` specifies the field separator string, such as `,` and `\t`.
+```{r}
 # save Qn1 to .csv
 write.csv(Qn1, file = "data/CO2-Qn1.csv", row.names = FALSE, quote = FALSE)
 # use read.csv to read CO2-Qn1.csv
-# fileEncoding declares the encoding used on the file, which must be careful 
-# when you read data containing Chinese on Windows. In such a situation, you can 
-# try fileEncoding = "cp936".
-# stringsAsFactors is a logical value indicating whether character vectors should 
-# be converted to factors. The default is TRUE, while some functions doesn't work
-# with factors.
 csv <- read.csv(file = "data/CO2-Qn1.csv", header = TRUE, sep = ",", 
                 fileEncoding = "utf-8", stringsAsFactors = FALSE)
+```
+The argument `header` indicates whether the file contains the names of the variables as its first line. The argument `fileEncoding` declares the encoding used on the file, which must be careful when you read data containing Chinese on Windows. In such a situation, you can try `fileEncoding = "cp936"` or `fileEncoding = "GBK"`. It's always good to write and read files using `fileEncoding` of `utf-8`. `stringsAsFactors` is a logical value indicating whether character vectors should be converted to factors. The default is TRUE, while some functions is weird when factors rather than characters are input.
+```{r}
 str(csv)
+```
+You can see that the classes of variables `Plant`, `Type` and `Treatment` are all character rather than factor by turning `stringsAsFactors` to `FALSE`.
 
+```{r, eval=FALSE}
 # install xlsx package
-if(!"xlsx" %in% installed.packages()) install.packages("xlsx")
+install.packages("xlsx")
+```
+```{r}
 # load xlsx pacakage
 library(xlsx)
 # write Qn1 to .xls
 write.xlsx(Qn1, file = "data/CO2-Qn1.xls", sheetName = "Sheet1", col.names = TRUE, 
            row.names = FALSE)
+```
+The argument `sheetName` is the sheet name of the the workbook to be written. The argument `col.names` indicates if the column names of the data.frame to be written. We're used to writing column names rather than row names as the column names are the names of variables.
+```{r}
 # use read.xlsx to read CO2-Qn1.xls 
 xlsx <- read.xlsx(file = "data/CO2-Qn1.xls", sheetName = "Sheet1")
 str(xlsx)
-
+```
+```{r, eval=FALSE}
 # install foreign package
-if(!"foreign" %in% installed.packages()) install.packages("foreign")
+install.packages("foreign")
+```
+```{r}
 # load foreign pacakage
 library(foreign)
 # write Qn1 to .dbf
@@ -193,23 +250,28 @@ write.dbf(Qn1, file = "data/CO2-Qn1.dbf")
 # use read.dbf to read CO2-Qn1.dbf
 dbf <- read.dbf(file = "data/CO2-Qn1.dbf")
 str(dbf)
-
+```
+`ls()` is also a handy function for listing objects in the specified environment.
+```{r}
 # list objects in current environment
 ls()
 # save txt, csv, xlsx and dbf .RData or .rda
 save(txt, csv, xlsx, dbf, file = "data/format.RData")
-# remove txt, csv, xlsx and dbf from current environment
+```
+We use `rm()` to remove `txt`, `csv`, `xlsx` and `dbf` from current environment.
+```{r}
 rm(txt, csv, xlsx, dbf)
 ls()
-# load format.RData
+```
+Now we can load *format.RData* back and see all R objects in current environment.
+```
 load(file = "data/format.RData")
-# list objects in current environment
 ls()
 ```
 
 ### Demostration
 
-The `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of **SURF_CLI_CHN_MUL_DAY** v3.0 produced by [CMDSSS](http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger). The following code demostrates how to preprocess the **SURF_CLI_CHN_MUL_DAY** dataset and extract your desired data in R, which is from my own research.
+The `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` contains daily temporature collected from all meteorological stations across China in September 2014, which is downloaded from the dataset of **SURF_CLI_CHN_MUL_DAY** v3.0 produced by [CMDSSS](http://cdc.nmic.cn/dataSetLogger.do?changeFlag=dataLogger). The following code demostrates how to extract your desired data from **SURF_CLI_CHN_MUL_DAY** dataset in R, which is a common case that you may encounter in your own research.
 
 ```{r}
 # use read.table to read dataset in TXT
@@ -233,9 +295,53 @@ str(data)
 # V11: quality control code of average temperature
 # V12: quality control code of daily maximum temperature
 # V13: quality control code of daily minimum temperature
+```
+The property of a good variable name is that you're able to know its meanning from the name. Apparently, `V1, V2, ..., V13` are not good variable names. We can use `colnames()` to set and retrieve columns names of a data.frame.
+```{r}
 colnames(data) <- c("id", "lat", "lng", "alt", "year", "month", "day", "meanT", 
                     "maxT", "minT", "meanQC", "maxQC", "minQC")
+colnames(data)
+```
+Suppose that we are interested in temperatures from Miyun station whose id is 54416. Here we use `[` operator to extract our desired data. `[` is an operator acting on vectors, matrices, arrays and lists to extract or replace parts.
 
+We know `data` is a data.frame with 24240 observations by 13 variables from `str(data)`. On a technical level, a data.frame is a list, with the components of that list being equal-length vectors. Hence, we can access a data.frame via component index values or component names. For example, `data[[1]]` represents extracting the first variable, namely `id` from `data` via component index `1`; `data$id` will extract the variable `id` by component name `id`. It's notable that `[[` is supposed to be used to extract the integer vector of variable `id`, otherwise only using `[` will return a subsetting data.frame with only one variable `id`. 
+```{r}
+str(data[[1]])
+str(data[1])
+```
+We can also treat data.frame in a matrix-like fashion. For example, we can extract the 8th to 10th columns.
+```{r}
+str(data[, 8:10])
+```
+The first subscript being empty means all rows will be kept. Now we have all temperature variables. We can also extract those temperature variables by giving their column names.
+```{r}
+str(data[, c("meanT", "maxT", "minT")])
+```
+But our goal is to acquire temperatures collected from Miyun station. Therefore, we have to further keep only those rows with variable `id` equal to `54416`.
+```{r}
+# extract temperatures collected from Miyun station whose id is 54416
+Miyun.TEM <- data[data$id == 54416, c("meanT", "maxT", "minT")]
+```
+`data$id == 54416` returns a logical vector indicating whether the variable `id` in the the observation is equal to 54416. Taking a logical vector into the first subsript means only rows with `TRUE` value will be kept. 
+```{r}
+str(Miyun.TEM)
+```
+We can summarize the extracted data by `summary()`, which gives us the statistics of minimum, 1st quantile, mean, median, 3rd quantile, and maximum of the numeric vector. 
+```{r}
+# summaries of meanT, maxT, and minT
+summary(Miyun.TEM)
+```
+Oops, you see that the temperatue values are too large as they are in 0.1 degree Celsius. Multiplying all temperatures by a scale of 0.1 gives us the actual temperature values. Since R supports vectorized arithmetic operations, multiplying each element in the data.frame by a numeric can be easily accomplished without the typical `for` loops.
+```{r}
+Miyun.TEM <- Miyun.TEM * 0.1
+summary(Miyun.TEM)
+```
+Now we can save the extracted temperatures from Miyun station to external file for further data analysis.
+```{r}
+save(Miyun.TEM, file = "data/Miyun-TEM-201409.RData")
+```
+
+```{r, eval=FALSE, include=FALSE}
 # convert dm (the last two digits of dm represent minitue) into degree
 DM2D <- function(dm) {
   dm %/% 100 + (dm %% 100) / 60
@@ -255,16 +361,6 @@ process <- function(df) {
 }
 
 data <- process(data)
-str(data)
-
-# extract data collected from Miyun station whose id is 54416 and discard quality control codes
-x <- subset(data[, !names(data) %in% c("meanQC", "maxQC", "minQC")], id == 54416)
-str(x)
-# summaries of meanT, maxT, and minT
-summary(x[, c("meanT", "maxT", "minT")])
-
-# save the extracted data to external file for further data analysis
-save(x, file = "data/Miyun-TEM-201409.RData")
 ```
 
 ## References
