@@ -51,12 +51,12 @@ Now you can use the aforementioned functions to manipulate files and directories
 # list all files including directories under current working directory
 list.files()
 ```
-`list.files()` lists all files including directories under `Lab2`. Assume you're only interested in directories, you have to determine which of those are directories. `file.info()` can give you the file status that you need.
+`list.files()` lists all files including directories under `Lab2`. Assume that you're only interested in directories, you have to determine which of those are directories. `file.info()` can give you the file status that you need.
 ```{r}
 # extract file information for those files
 file.info(list.files())
 ```
-In the above command, the character vector of the names of files and directories returned by `list.files()` is used as the first argument of `file.info()`. `isdir` in the output file status indicates whether the file is a directory. You can use `list.dirs()` to filter only those directories.
+The character vector of the names of files and directories returned by `list.files()` is used as the first argument of `file.info()`. Among the output file status, `isdir` indicates whether the file is a directory. You can use `list.dirs()` to filter only those directories.
 ```{r}
 # list only directories under current working directory
 list.dirs()
@@ -70,16 +70,14 @@ list.files(recursive = TRUE, pattern = ".R$", full.names = TRUE)
 ```
 The argument `recursive = TRUE` means to search R scripts not only in current directory, but also in subdirectories. The argument `pattern` is usually a [regular expression](https://en.wikipedia.org/wiki/Regular_expression), which means only file names that match the regular expression will be returned. Here `pattern = ".R$"` filters those files that end with `.R"`. The argument `full.names = TRUE` returns the full path that the directory path is prepended to the file name. Turn `full.names` to `FALSE` and only the file name is returned.
 
-During data analysis, it's common to create directories to write resutls. The following R code creates a recursive directory under Lab2 to store the TXT data, which will be used in Part III.
+During data analysis, it's common to create directories to write results. The following R code creates a recursive directory under Lab2 to store the TXT data, which will be used in Part III.
 ```{r}
 if(!dir.exists("data/CMDSSS"))
   dir.create("data/CMDSSS", recursive = TRUE)
 ```
 We first use `dir.exists()` to check whether the directories to be created is existed. Make sure that they are not existed, we use `dir.create()` to create the recursive directories, otherwise there is no need to do such a directory creation.
 
-Next we would like to create a temporary R script udner `script` to say hello to R.
-
-First, we create a temporary subdirectory named `tmp` under directory `script`, in which we further create a temporary R script named `tmp.R`.
+Next we would like to create a temporary R script udner `script` to say hello to R. To accomplish such a task, we firstly create a temporary subdirectory named `tmp` under directory `script`, in which we further create a temporary R script named `tmp.R`.
 ```{r}
 # create a temporary directory under script
 if(!dir.exists("script/tmp")) dir.create("script/tmp")
@@ -107,9 +105,9 @@ list.files("script", recursive = TRUE)
 # attempt to delete inexistent helloworld.R
 file.remove(c("script/hello.R", "script/helloworld.R"))
 ```
-Here, a character of two file paths is given to `file.remove()` and a logical vector of two elements is returned. As the second file path points to the inexistent `helloworld.R`, the corresponding `FALSE` indicates that the file deletion is failed. And a warning of "No such file or directory" is thrown to show the reason why failed to delete the file. 
+Here a character of two file paths is given to `file.remove()` and a logical vector of two elements is returned. As the second file path points to the inexistent `helloworld.R`, the corresponding `FALSE` indicates that the file deletion is failed. And a warning of "No such file or directory" is thrown to show the reason why failed to delete the file. 
 
-The following R code shows how to delete a directoty that is not empty. We can see that the `tmp` directory contains `tmp.R`. To delete such a directory, we can use `unlink()` with the argument `recursive` to be `TRUE`.
+The following R codes show how to delete a directoty that is not empty. We can see that the `tmp` directory contains `tmp.R`. To delete such a directory, we can use `unlink()` with the argument `recursive` to be `TRUE`.
 ```{r}
 list.files("script", recursive = TRUE)
 # delete the temporary directory that is not empty.
@@ -142,7 +140,7 @@ head(CO2, 14)
 # end the divertion
 sink()
 ```
-Source the R script after saving it. `head(CO2, 14)` returns the first 14 rows of data.frame `CO2`, while you see the outputs is not displayed on R Console as the code is between `sink()`. Instead, the outputs are diverted into the file *CO2.txt*. It's always good to sink the outputs of your R codes into a file, particularly when it's time-consuming to run the R script once.
+Source the R script after saving it. `head(CO2, 14)` returns the first 14 rows of data.frame `CO2`, while you see the outputs are not displayed on R Console as the code is between `sink()`. Instead, the outputs are diverted into the file *CO2.txt*. It's always good to sink the outputs of your R codes into a file, particularly when it's time-consuming to run the R script once.
 ```{r, include=FALSE}
 # sink() does not work in knitr, because it is already used internally to capture 
 # results. To make it work, you have to use {} wrap up all aboving code in a 
@@ -174,7 +172,7 @@ capture.output(head(CO2, 14), file = "data/CO2.txt")
 
 ## Part III Imports and Exports
 
-Here I list some functions in R for reading and storing data in common formats, such as Plain Text (.txt), CSV (.csv), Excel (.xls, .xlsx), and dBase (.dbf). For large and complex data, databases are supposed to be used for management. 
+Here I list some typical functions in R for reading and storing data in common formats, such as Plain Text (.txt), CSV (.csv), Excel (.xls, .xlsx), and dBase (.dbf). For large and complex data, databases are supposed to be used for management. 
 
 **`read.table()`** and **`write.table()`**: reads a file in table format and creates a data frame from it.
 
@@ -184,7 +182,7 @@ Here I list some functions in R for reading and storing data in common formats, 
 
 `read.dbf()` and `write.dbf()`: reads and writes dBase files. They are from [foreign](https://cran.r-project.org/web/packages/foreign/index.html) package, which provides functions for reading and writing data stored by Minitab, S, SAS, SPSS, Stata, dBase, .... The reason why I specially introduce how to read dBase files is that the attribute table of shape file is stored in .dbf format.
 
-**`save()`** and **`load()`**: writes R objects to the specified file. The objects can be read back from the file later by using `load`.
+**`save()`** and **`load()`**: writes R objects to the specified file. The objects can be read back from the file later by using `load()`.
 
 `data()`: loads specified data sets, or list the available data sets.
 
@@ -193,11 +191,11 @@ Now we use `read.table()` to read in *CO2.txt* to check the outputs of `sink()` 
 # read data in Plain Text
 txt <- read.table(file = "data/CO2.txt")
 ```
-`str()` is a handy function for compactly display the structure of an arbitrary R object. Before manipulating an R object, it's always good to use `str` to show its structure, especially for those R objects that you aren't familar with.
+`str()` is a handy function for compactly displaying the structure of an arbitrary R object. Before manipulating an R object, it's always good to use `str` to show its structure, especially for thoses R objects that you aren't familar with.
 ```{r}
 str(txt)
 ```
-We can see `txt` is a data.frame with 14 observations of 5 variables. For data.frame, a row represents an observation and a column represetn a variable. Hence, the data.frame `txt` has a size of 14 rows by 5 columns. The class of each variable and their values are also shown. Among which, the variable `Plant` has is a factor with two value levels of `Qn1` and `Qn2`. Suppose that only `Qn1` plant is of interest. We can use `subset()` to extract data of `Qn1` plant.
+We can see `txt` is a data.frame with 14 observations of 5 variables. In a data.frame, a row represents an observation and a column represetn a variable. Hence, the data.frame `txt` has a size of 14 rows by 5 columns. The class of each variable and their values are also shown. Among which, the variable `Plant` is a factor with two value levels of `Qn1` and `Qn2`. Suppose that only `Qn1` plant is of interest. We can use `subset()` to extract data of `Qn1` plant.
 ```{r}
 Qn1 <- subset(txt, Plant == "Qn1")
 ```
@@ -215,7 +213,7 @@ write.csv(Qn1, file = "data/CO2-Qn1.csv", row.names = FALSE, quote = FALSE)
 csv <- read.csv(file = "data/CO2-Qn1.csv", header = TRUE, sep = ",", 
                 fileEncoding = "utf-8", stringsAsFactors = FALSE)
 ```
-The argument `header` indicates whether the file contains the names of the variables as its first line. The argument `fileEncoding` declares the encoding used on the file, which must be careful when you read data containing Chinese on Windows. In such a situation, you can try `fileEncoding = "cp936"` or `fileEncoding = "GBK"`. It's always good to write and read files using `fileEncoding` of `utf-8`. `stringsAsFactors` is a logical value indicating whether character vectors should be converted to factors. The default is TRUE, while some functions is weird when factors rather than characters are input.
+The argument `header` indicates whether the file contains the names of the variables as its first line. The argument `fileEncoding` declares the encoding used on the file, which must be careful when you read data containing Chinese on Windows. In such a situation, you can try `fileEncoding = "cp936"` or `fileEncoding = "GBK"`. It's always good to write and read files using `fileEncoding = "utf-8"`. `stringsAsFactors` is a logical value indicating whether character vectors should be converted to factors. The default is TRUE, while some functions return weird results when factors rather than characters are input.
 ```{r}
 str(csv)
 ```
@@ -232,7 +230,7 @@ library(xlsx)
 write.xlsx(Qn1, file = "data/CO2-Qn1.xls", sheetName = "Sheet1", col.names = TRUE, 
            row.names = FALSE)
 ```
-The argument `sheetName` is the sheet name of the the workbook to be written. The argument `col.names` indicates if the column names of the data.frame to be written. We're used to writing column names rather than row names as the column names are the names of variables.
+The argument `sheetName` is the sheet name of the workbook to be written. The argument `col.names` indicates if the column names of the data.frame to be written. We're used to writing column names rather than row names as the column names are the variable names.
 ```{r}
 # use read.xlsx to read CO2-Qn1.xls 
 xlsx <- read.xlsx(file = "data/CO2-Qn1.xls", sheetName = "Sheet1")
@@ -296,7 +294,7 @@ str(data)
 # V12: quality control code of daily maximum temperature
 # V13: quality control code of daily minimum temperature
 ```
-The property of a good variable name is that you're able to know its meanning from the name. Apparently, `V1, V2, ..., V13` are not good variable names. We can use `colnames()` to set and retrieve columns names of a data.frame.
+As `SURF_CLI_CHN_MUL_DAY-TEM-12001-201409.TXT` doesn't contain a header, the column names of `V1, V2, ..., V13` are automatically added. When no header is contained in the file to be read, column names comprised of `V` and column index are provided. The property of a good variable name is that you're able to know its meanning from the name. Apparently, `V1, V2, ..., V13` are not good variable names. We can use `colnames()` to set and retrieve column names of a data.frame.
 ```{r}
 colnames(data) <- c("id", "lat", "lng", "alt", "year", "month", "day", "meanT", 
                     "maxT", "minT", "meanQC", "maxQC", "minQC")
@@ -304,7 +302,7 @@ colnames(data)
 ```
 Suppose that we are interested in temperatures from Miyun station whose id is 54416. Here we use `[` operator to extract our desired data. `[` is an operator acting on vectors, matrices, arrays and lists to extract or replace parts.
 
-We know `data` is a data.frame with 24240 observations by 13 variables from `str(data)`. On a technical level, a data.frame is a list, with the components of that list being equal-length vectors. Hence, we can access a data.frame via component index values or component names. For example, `data[[1]]` represents extracting the first variable, namely `id` from `data` via component index `1`; `data$id` will extract the variable `id` by component name `id`. It's notable that `[[` is supposed to be used to extract the integer vector of variable `id`, otherwise only using `[` will return a subsetting data.frame with only one variable `id`. 
+We know `data` is a data.frame with 24240 observations of 13 variables from `str(data)`. On a technical level, a data.frame is a list, with the components of that list being equal-length vectors. Hence, we can access a data.frame via component index values or component names. For example, `data[[1]]` represents extracting the first variable, namely `id` from `data` via component index `1`; `data$id` will extract the variable `id` by component name `id`. It's notable that `[[` is supposed to be used to extract the integer vector of variable `id`, otherwise only using `[` will return a subsetting data.frame with only one variable `id`. 
 ```{r}
 str(data[[1]])
 str(data[1])
@@ -322,11 +320,11 @@ But our goal is to acquire temperatures collected from Miyun station. Therefore,
 # extract temperatures collected from Miyun station whose id is 54416
 Miyun.TEM <- data[data$id == 54416, c("meanT", "maxT", "minT")]
 ```
-`data$id == 54416` returns a logical vector indicating whether the variable `id` in the the observation is equal to 54416. Taking a logical vector into the first subsript means only rows with `TRUE` value will be kept. 
+`data$id == 54416` returns a logical vector indicating whether the variable `id` in the observation is equal to 54416. Taking a logical vector into the first subsript means only rows with `TRUE` value will be kept. 
 ```{r}
 str(Miyun.TEM)
 ```
-We can summarize the extracted data by `summary()`, which gives us the statistics of minimum, 1st quantile, mean, median, 3rd quantile, and maximum of the numeric vector. 
+We can summarize the extracted data by `summary()`, which gives us the statistics of minimum, 1st quantile, mean, median, 3rd quantile, and maximum of the input numeric vector. 
 ```{r}
 # summaries of meanT, maxT, and minT
 summary(Miyun.TEM)
