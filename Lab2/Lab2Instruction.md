@@ -1,5 +1,5 @@
 # Lab2 Instruction
-September 18, 2015  
+September 28, 2015  
 
 Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, only these frequently used functions are mentioned in this instruction.
 
@@ -66,19 +66,19 @@ file.info(list.files())
 ##                        size isdir mode               mtime
 ## data                    374  TRUE  755 2015-09-21 01:09:20
 ## header.tex              317 FALSE  644 2015-09-22 17:20:20
-## Lab2Instruction.html 338533 FALSE  644 2015-09-22 17:06:00
-## Lab2Instruction.md    19105 FALSE  644 2015-09-22 17:06:00
-## Lab2Instruction.pdf   77496 FALSE  644 2015-09-23 20:14:01
-## Lab2Instruction.Rmd   21561 FALSE  644 2015-09-23 20:15:12
-## script                  102  TRUE  755 2015-09-23 20:13:51
+## Lab2Instruction.html 348679 FALSE  644 2015-09-23 20:15:15
+## Lab2Instruction.md    26996 FALSE  644 2015-09-23 20:15:15
+## Lab2Instruction.pdf   77494 FALSE  644 2015-09-28 16:59:37
+## Lab2Instruction.Rmd   21561 FALSE  644 2015-09-28 16:59:55
+## script                  102  TRUE  755 2015-09-28 16:59:26
 ##                                    ctime               atime uid gid
-## data                 2015-09-21 01:09:20 2015-09-23 20:13:51 501  20
-## header.tex           2015-09-22 17:20:20 2015-09-23 20:13:53 501  20
-## Lab2Instruction.html 2015-09-22 17:06:00 2015-09-23 12:44:38 501  20
-## Lab2Instruction.md   2015-09-22 17:06:00 2015-09-23 12:44:38 501  20
-## Lab2Instruction.pdf  2015-09-23 20:14:01 2015-09-23 20:14:02 501  20
-## Lab2Instruction.Rmd  2015-09-23 20:15:12 2015-09-23 20:15:12 501  20
-## script               2015-09-23 20:13:51 2015-09-23 20:13:51 501  20
+## data                 2015-09-21 01:09:20 2015-09-28 16:59:26 501  20
+## header.tex           2015-09-22 17:20:20 2015-09-28 16:59:28 501  20
+## Lab2Instruction.html 2015-09-23 20:15:15 2015-09-23 20:15:16 501  20
+## Lab2Instruction.md   2015-09-23 20:15:15 2015-09-23 20:15:52 501  20
+## Lab2Instruction.pdf  2015-09-28 16:59:37 2015-09-28 16:59:37 501  20
+## Lab2Instruction.Rmd  2015-09-28 16:59:55 2015-09-28 16:59:55 501  20
+## script               2015-09-28 16:59:26 2015-09-28 16:59:26 501  20
 ##                         uname grname
 ## data                 tonytsai  staff
 ## header.tex           tonytsai  staff
