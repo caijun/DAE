@@ -129,6 +129,12 @@ R provides functions to save the results that appear in your R Console into a te
 
 **`capture.output()`**: sends R output to a character string or file connection.
 
+R also provides functions to save and load R objects in its own file formats, such as `.RData` or `.rda`.
+
+`data()`: loads specified data sets, or list the available data sets.
+
+**`save()`** and **`load()`**: writes R objects to the specified file. The objects can be read back from the file later by using `load()`. To save all the objects that you have created in current workspace, you can use `save.image()`, which is a  wrapper function for `save(list = ls(all.names = TRUE), file = ".RData", envir = .GlobalEnv)`. The argument `envir` specifies in which environment R objects are to be saved; and `.GlobalEnv` represents the global environment, which is more often known as the user's workspace. It's common to see saving your workspace image before quitting R. If you choose "yes", then `save.image()` will write all R objects in your workspace into a file named `.RData` in your current working directory. The next time you start R in this directory, that workspace and all its data objects will be restored. You can easily continue your data analysis.
+
 Create a new R script and type following codes. You're encouraged to write R codes in R script rather R Console as you can accumulate your R codes and easily modify them. Usually, you can type handy R functions and short R codes in R Console for interactive check.
 ```{r, eval=FALSE}
 # divert R output to CO2.txt under data
@@ -181,10 +187,6 @@ Here I list some typical functions in R for reading and storing data in common f
 `read.xlsx()` and `write.xlsx()`: reads and writes Excel 2007 and Excel 97/2000/XP/2003 files. They are from [xlsx](https://cran.r-project.org/web/packages/xlsx/index.html) package. There are some other packages for reading or/and Excel files, such as [openxlsx](https://cran.r-project.org/web/packages/openxlsx/index.html), [XLConnect](https://cran.r-project.org/web/packages/XLConnect/index.html), [readxl](https://cran.r-project.org/web/packages/readxl/index.html) and [WriteXLS](https://cran.r-project.org/web/packages/WriteXLS/index.html). Excel files do not work smoothly in many data processing software so CSV is a preferred format to save your data in MS Excel. 
 
 `read.dbf()` and `write.dbf()`: reads and writes dBase files. They are from [foreign](https://cran.r-project.org/web/packages/foreign/index.html) package, which provides functions for reading and writing data stored by Minitab, S, SAS, SPSS, Stata, dBase, .... The reason why I specially introduce how to read dBase files is that the attribute table of shape file is stored in .dbf format.
-
-**`save()`** and **`load()`**: writes R objects to the specified file. The objects can be read back from the file later by using `load()`.
-
-`data()`: loads specified data sets, or list the available data sets.
 
 Now we use `read.table()` to read in *CO2.txt* to check the outputs of `sink()` in Part II.
 ```{r}

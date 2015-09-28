@@ -108,19 +108,19 @@ file.info(list.files())</code></pre>
 <pre><code>##                        size isdir mode               mtime
 ## data                    374  TRUE  755 2015-09-21 01:09:20
 ## header.tex              317 FALSE  644 2015-09-22 17:20:20
-## Lab2Instruction.html 348679 FALSE  644 2015-09-23 20:15:15
-## Lab2Instruction.md    26996 FALSE  644 2015-09-23 20:15:15
-## Lab2Instruction.pdf   77494 FALSE  644 2015-09-28 16:59:37
-## Lab2Instruction.Rmd   21561 FALSE  644 2015-09-28 16:59:55
-## script                  102  TRUE  755 2015-09-28 16:59:26
+## Lab2Instruction.html 348679 FALSE  644 2015-09-28 16:59:58
+## Lab2Instruction.md    26996 FALSE  644 2015-09-28 16:59:58
+## Lab2Instruction.pdf   79236 FALSE  644 2015-09-28 18:08:09
+## Lab2Instruction.Rmd   22412 FALSE  644 2015-09-28 18:10:05
+## script                  102  TRUE  755 2015-09-28 18:07:59
 ##                                    ctime               atime uid gid
-## data                 2015-09-21 01:09:20 2015-09-28 16:59:26 501  20
-## header.tex           2015-09-22 17:20:20 2015-09-28 16:59:28 501  20
-## Lab2Instruction.html 2015-09-23 20:15:15 2015-09-23 20:15:16 501  20
-## Lab2Instruction.md   2015-09-23 20:15:15 2015-09-23 20:15:52 501  20
-## Lab2Instruction.pdf  2015-09-28 16:59:37 2015-09-28 16:59:37 501  20
-## Lab2Instruction.Rmd  2015-09-28 16:59:55 2015-09-28 16:59:55 501  20
-## script               2015-09-28 16:59:26 2015-09-28 16:59:26 501  20
+## data                 2015-09-21 01:09:20 2015-09-28 18:07:59 501  20
+## header.tex           2015-09-22 17:20:20 2015-09-28 18:08:00 501  20
+## Lab2Instruction.html 2015-09-28 16:59:58 2015-09-28 17:02:14 501  20
+## Lab2Instruction.md   2015-09-28 16:59:58 2015-09-28 17:02:14 501  20
+## Lab2Instruction.pdf  2015-09-28 18:08:09 2015-09-28 18:09:03 501  20
+## Lab2Instruction.Rmd  2015-09-28 18:10:05 2015-09-28 18:10:05 501  20
+## script               2015-09-28 18:07:59 2015-09-28 18:07:59 501  20
 ##                         uname grname
 ## data                 tonytsai  staff
 ## header.tex           tonytsai  staff
@@ -187,6 +187,9 @@ list.files(&quot;script&quot;)</code></pre>
 <p>R provides functions to save the results that appear in your R Console into a text file.</p>
 <p><code>sink()</code>: diverts R output to a file connection.</p>
 <p><strong><code>capture.output()</code></strong>: sends R output to a character string or file connection.</p>
+<p>R also provides functions to save and load R objects in its own file formats, such as <code>.RData</code> or <code>.rda</code>.</p>
+<p><code>data()</code>: loads specified data sets, or list the available data sets.</p>
+<p><strong><code>save()</code></strong> and <strong><code>load()</code></strong>: writes R objects to the specified file. The objects can be read back from the file later by using <code>load()</code>. To save all the objects that you have created in current workspace, you can use <code>save.image()</code>, which is a wrapper function for <code>save(list = ls(all.names = TRUE), file = &quot;.RData&quot;, envir = .GlobalEnv)</code>. The argument <code>envir</code> specifies in which environment R objects are to be saved; and <code>.GlobalEnv</code> represents the global environment, which is more often known as the user’s workspace. It’s common to see saving your workspace image before quitting R. If you choose “yes”, then <code>save.image()</code> will write all R objects in your workspace into a file named <code>.RData</code> in your current working directory. The next time you start R in this directory, that workspace and all its data objects will be restored. You can easily continue your data analysis.</p>
 <p>Create a new R script and type following codes. You’re encouraged to write R codes in R script rather R Console as you can accumulate your R codes and easily modify them. Usually, you can type handy R functions and short R codes in R Console for interactive check.</p>
 <pre class="r"><code># divert R output to CO2.txt under data
 sink(file = &quot;data/CO2.txt&quot;)
@@ -216,8 +219,6 @@ x</code></pre>
 <p><strong><code>read.csv()</code></strong> and <strong><code>write.csv()</code></strong>: reads a CSV file and creates a data frame from it. A standard <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> file actually stores tabular data in plain text with values separated by comma.</p>
 <p><code>read.xlsx()</code> and <code>write.xlsx()</code>: reads and writes Excel 2007 and Excel 97/2000/XP/2003 files. They are from <a href="https://cran.r-project.org/web/packages/xlsx/index.html">xlsx</a> package. There are some other packages for reading or/and Excel files, such as <a href="https://cran.r-project.org/web/packages/openxlsx/index.html">openxlsx</a>, <a href="https://cran.r-project.org/web/packages/XLConnect/index.html">XLConnect</a>, <a href="https://cran.r-project.org/web/packages/readxl/index.html">readxl</a> and <a href="https://cran.r-project.org/web/packages/WriteXLS/index.html">WriteXLS</a>. Excel files do not work smoothly in many data processing software so CSV is a preferred format to save your data in MS Excel.</p>
 <p><code>read.dbf()</code> and <code>write.dbf()</code>: reads and writes dBase files. They are from <a href="https://cran.r-project.org/web/packages/foreign/index.html">foreign</a> package, which provides functions for reading and writing data stored by Minitab, S, SAS, SPSS, Stata, dBase, …. The reason why I specially introduce how to read dBase files is that the attribute table of shape file is stored in .dbf format.</p>
-<p><strong><code>save()</code></strong> and <strong><code>load()</code></strong>: writes R objects to the specified file. The objects can be read back from the file later by using <code>load()</code>.</p>
-<p><code>data()</code>: loads specified data sets, or list the available data sets.</p>
 <p>Now we use <code>read.table()</code> to read in <em>CO2.txt</em> to check the outputs of <code>sink()</code> in Part II.</p>
 <pre class="r"><code># read data in Plain Text
 txt &lt;- read.table(file = &quot;data/CO2.txt&quot;)</code></pre>
