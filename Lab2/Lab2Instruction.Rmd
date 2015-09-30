@@ -1,13 +1,13 @@
 ---
 title: "Lab2 Instruction"
 output:
+  html_document:
+    keep_md: yes
   pdf_document:
     includes:
       in_header: header.tex
     latex_engine: xelatex
-  html_document:
-    keep_md: yes
-date: "September 28, 2015"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
 ---
 
 Lab2 contains basics for file and directory manipulation, and R data input and output. Rather than a complete collection of functions, only these frequently used functions are mentioned in this instruction.
