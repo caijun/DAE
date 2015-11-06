@@ -1,0 +1,106 @@
+---
+title: "Answer to assignment4"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    latex_engine: xelatex
+  html_document:
+    keep_md: yes
+date: '`r format(Sys.time(), "%B %d, %Y")`'
+---
+### Preparing data
+```{r}
+setwd("~/Documents/R/DAE/Lab3/Lab3data")
+bio <- read.csv("bio.csv")
+str(bio)
+```
+
+## Power analysis
+1. Calculate [effect size](https://en.wikipedia.org/wiki/Effect_size) using [Cohen's d](https://en.wikipedia.org/wiki/Effect_size#Cohen.27s_d).
+
+Cohen's d is defined as the difference between two means divided by a standard deviation for the data, i.e.
+$$
+d = \frac{\bar{x}_1 - \bar{x}_2}{s}.
+$$
+Jacob Cohen defined $s$, the pooled standard deviation, as (for two independent samples):
+$$
+s = \sqrt{\frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2}}
+$$
+
+where $s_1$ and $s_2$ are the variances of group1 and group2, respectively.
+
+The following code calculates the Cohen's of `Groupa` and `Groupb`.
+```{r}
+n1 <- length(bio$Groupa)
+n2 <- length(bio$Groupb)
+s <- sqrt(((n1 -1) * var(bio$Groupa) + (n2 -1) * var(bio$Groupb)) / (n1 + n2 - 2))
+(Cd <- (mean(bio$Groupa) - mean(bio$Groupb)) / s)
+```
+Alternatively, you can call the existing function `cohen.d` from **effsize** package. A benfit of function `cohen.d` is that the confidence interval of Cohen's d is also provided.
+```{r}
+install.packages("effsize", repos = "https://mirrors.tuna.tsinghua.edu.cn/CRAN/")
+library(effsize)
+cohen.d(bio$Groupa, bio$Groupb)
+```
+
+2. Calculate the sample size
+
+After knowing the Cohen's d between `Groupa` and `Groupb` is `r Cd`, we call the `pwr.t.test` function from `pwr` package to calculate the sample size needed for detecting the difference between `Groupa` and `Groupb` at a power of 0.2, 0.5, 0.8 each and a significance level of 0.05 using t-tests.
+```{r}
+library(pwr)
+pwr.t.test(d = Cd, sig.level = 0.05, power = 0.2, type = "two.sample", 
+           alternative = "two.sided")
+pwr.t.test(d = Cd, sig.level = 0.05, power = 0.5, type = "two.sample", 
+           alternative = "two.sided")
+pwr.t.test(d = Cd, sig.level = 0.05, power = 0.8, type = "two.sample", 
+           alternative = "two.sided")
+```
+## Tukey test
+To conduct a Tukey test on all four groups, we need to stack the `bio` data.
+
+```{r}
+sbio <- stack(bio)
+names(sbio) <- c("Values", "Groups")
+str(sbio)
+```
+
+We can see there are 4 levels (i.e. `Groupa`, `Groupb`, `Groupc` and `Groupd`) for factor `Groups`.
+
+1. Fit an ANOVA model
+
+```{r}
+sbio.aov <- aov(Values ~ Groups, data = sbio)
+summary(sbio.aov)
+```
+From the output, we can see that `Groups` is not significant, which means that we can't draw the conclusion that there exists difference on the mean between the four groups. So it's not necessary for us to further investigate the particular groups where there are differences using Tukey's multiple comparisons. However, as an exercise, we can still give it a try.
+
+As there is only one independant factor `Groups`, it's an one-way analysis of variance. Hence, function `TukeyHSD` can be used to theoretically conduct the Tukey test.
+Typing `?TukeyHSD` to see the help document of function `TukeyHSD`, we know the function `TukeyHSD` "would only apply exactly to balanced designs where there are the same number of observations made at each level of the factor. This function incorporates an adjustment for sample size that produces sensible intervals for mildly unbalanced designs." As there are 20 NAs for `Groupd`, a Tukey test is more appropriate.
+
+2. Conduct the Tukey test
+
+```{r}
+library(multcomp)
+sbio.mc <- glht(sbio.aov, linfct = mcp(Groups = "Tukey"))
+summary(sbio.mc)
+```
+We can see that no significant p-value is produced for all pair-wise comparisions of the `Groups` levels. Actually, the `TukeyHSD` test gives the same results.
+```{r}
+TukeyHSD(sbio.aov)
+```
+
+3. Calculate the two-sided, 95% confindence interval and plot the interval
+
+```{r}
+sbio.ci <- confint(sbio.mc, level = 0.95)
+sbio.ci
+plot(sbio.ci, xlab = "Values")
+```
+
+4. Produce a compact letter display of all pair-wise comparisons
+
+```{r}
+sbio.cld <- cld(sbio.mc)
+plot(sbio.cld)
+```

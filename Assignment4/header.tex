@@ -1,0 +1,14 @@
+\usepackage{xeCJK} % support Chinese
+\setCJKmainfont{SimSun} % font name provided by fonts() from extrafont package
+
+\usepackage{fancyhdr} % set fancy head for each page
+
+\fancyhf{}
+\fancyhead[L]{Data Analysis in Ecology}
+\fancyhead[R]{Fall 2015}
+
+\pagestyle{fancy}
+
+\makeatletter
+\let\ps@plain\ps@fancy 
+\makeatother
