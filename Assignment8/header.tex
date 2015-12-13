@@ -1,0 +1,17 @@
+\usepackage{xeCJK} % support Chinese
+\setCJKmainfont{SimSun} % font name provided by fonts() from extrafont package
+
+\usepackage{fancyhdr} % set fancy head for each page
+\usepackage{lastpage}
+
+\fancyhf{}
+\fancyhead[L]{Data Analysis in Ecology}
+\fancyhead[R]{Fall 2015}
+
+\pagestyle{fancy}
+
+\makeatletter
+\let\ps@plain\ps@fancy 
+\makeatother
+
+\rfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}}

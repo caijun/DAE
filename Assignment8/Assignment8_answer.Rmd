@@ -1,0 +1,69 @@
+---
+title: "Answer to assignment8"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    latex_engine: xelatex
+  html_document:
+    keep_md: yes
+date: '`r format(Sys.time(), "%B %d, %Y")`'
+---
+### Preparing data
+```{r}
+setwd("~/Documents/R/DAE/Lab5/Lab5instruction/Ordination/")
+
+# Import the data from CSV files
+spe <- read.csv("DoubsSpe.csv", row.names = 1)
+env <- read.csv("DoubsEnv.csv", row.names = 1)
+data <- data.frame(LOC = spe$LOC, pho = env$pho, alt = env$alt)
+```
+
+### ANalysis Of VAriance (ANOVA)
+
+### Q1: How does pho affect LOC's abundance?
+We can use `aov` function to fit an analysis of variance model.
+```{r}
+# one-way ANOVA
+aov1 <- aov(LOC ~ pho, data = data)
+summary(aov1)
+```
+The *F*-test of `pho` ($p = 0.0106 < 0.05$) indicates that `pho` does affect `LOC`'s abundance and it can account for $22.70/(22.70+84.66)*100 = 0.2114$ variance of `LOC`. However, the output of `aov` function can not quantitatively measure how `pho` affects `LOC`'s abundance. Hence, we can first fit the one-way ANOVA model using the `lm` function.
+```{r}
+lm1 <- lm(LOC ~ pho, data = data)
+summary(lm1)
+```
+Since this model is a univariate linear model, the Multiple R-squared ($0.2115$) is actual the proportion of `LOC`'s variance that `pho` can explain.
+
+Then an analysis of variance table for this model can be produced via the `anova` command.
+```{r}
+anova(lm1)
+```
+The output of `anova` is the same as that of `aov`, but the coefficient of `pho` ($-1.0096$) from `lm` suggests that there is a negative relation between `LOC` and `pho`.
+
+At last, we need to investigate the model diagnostics to ensure that the various assumptions are broadly valid.
+```{r}
+par(mfrow = c(2, 2))
+plot(lm1)
+```
+
+### Q2: How do pho and alt affect LOC's abundance?
+To answer Q2, we can conduct a two-way ANOVA model using the methods described in Q1.
+```{r}
+# two-way ANOVA
+aov2 <- aov(LOC ~ pho + alt, data = data)
+summary(aov2)
+```
+From the analysis of variance table we can see `alt` can explain only $0.0510$ variance of `LOC` and the p-value of *F*-test of `alt` is $0.18330$, which is far greater than 0.05.
+```{r}
+lm2 <- lm(LOC ~ pho + alt, data = data)
+summary(lm2)
+anova(lm2)
+```
+Though including `alt` into predictors improves the Multiple R-squared by $0.0510$, but the coefficients of both `pho` and `alt` are not statistically significant. Another usage of `anova` function is to compare models. To determine whether the inclusion of `alt` is appropriate, we can use `anova` to compare `lm2` with `lm1`.
+```{r}
+anova(lm2, lm1)
+```
+Here `anova` performs the Chi-square test to compare `lm2` and `lm1`. It tests whether reduction in the residual sum of squares are statistically significant or not. From the output of `anova`, the reducation in the residual sum of squares is $-5.4706$ and the p-value of the test is $0.1833$. It means that the fitted model `lm2` is not significantly different from `lm1` at the level of $\alpha = 0.05$. Therefore, for the simplicity of fitted model and avoiding overfitting, it's more appropriate not to include `alt` as a predictor.
+
+In such a case, of course, it is unncessary to further consider the interaction of `pho` and `alt`.
