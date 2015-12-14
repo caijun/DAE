@@ -60,10 +60,10 @@ lm2 <- lm(LOC ~ pho + alt, data = data)
 summary(lm2)
 anova(lm2)
 ```
-Though including `alt` into predictors improves the Multiple R-squared by $0.0510$, but the coefficients of both `pho` and `alt` are not statistically significant. Another usage of `anova` function is to compare models. To determine whether the inclusion of `alt` is appropriate, we can use `anova` to compare `lm2` with `lm1`.
+Though including `alt` into predictors improves the Multiple R-squared by $0.0510$, but the coefficients of both `pho` and `alt` are not statistically significantat the level of $\alpha = 0.05$. Another usage of `anova` function is to compare models. To determine whether the inclusion of `alt` is appropriate, we can use `anova` to compare `lm2` with `lm1`.
 ```{r}
 anova(lm2, lm1)
 ```
 Here `anova` performs the Chi-square test to compare `lm2` and `lm1`. It tests whether reduction in the residual sum of squares are statistically significant or not. From the output of `anova`, the reducation in the residual sum of squares is $-5.4706$ and the p-value of the test is $0.1833$. It means that the fitted model `lm2` is not significantly different from `lm1` at the level of $\alpha = 0.05$. Therefore, for the simplicity of fitted model and avoiding overfitting, it's more appropriate not to include `alt` as a predictor.
 
-In such a case, of course, it is unncessary to further consider the interaction of `pho` and `alt`.
+In this case, of course, it is unncessary to further consider the interaction of `pho` and `alt`.
