@@ -24,23 +24,21 @@ hw1.score <- function(mqna) {
   return(hw1.sc)
 }
 
-df$Homework.1 <- hw1.score(df$Homework.1)
+# convert into same scale
+df$Homework.1 <- hw1.score(df$Homework.1) * 100
 
 # convert character to numeric
 df[, 5:20] <- sapply(df[, 5:20], as.numeric)
-# convert into same scale
-df[, 5:13] <- df[, 5:13] / 100
-# calculate presention score by averaging three judges
-# Note: the scores are already contain the weight of 0.3
-df$Presentation <- round(rowMeans(df[, 18:20]) / 0.3 / 100, 2)
-# the scores of Report are currently NAs, 
-# temporarily fill them with 0
-df[is.na(df)] <- 0
-
+# calculate homework score
 weight <- matrix(c(rep(0.02, 10), 0.1, 0.3, 0.4), 
                  dimnames = list(names(df)[4:16], "weight"))
+df$Homework <- round(as.matrix(df[, 4:13]) %*% weight[1:10], 0)
+# calculate attendance score
+df$Attendance <- df$Attendance * 10
+# calculate presention score by averaging three judges
+df$Presentation <- round(rowMeans(df[, 18:20]))
 
-df$Score <- round(as.matrix(df[, 4:16]) %*% weight * 100, 0)
+df$Score <- df$Homework + df$Attendance + df$Presentation + df$Report
 table(df$Score)
 
-write.csv(df, "DAE_scores.csv", row.names = F, quote = F)
+write.csv(df[, c(1:3, 21, 14:17)], "DAE_scores.csv", row.names = F, quote = F)
