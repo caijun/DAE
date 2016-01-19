@@ -27,10 +27,13 @@ hw1.score <- function(mqna) {
 df$Homework.1 <- hw1.score(df$Homework.1)
 
 # convert character to numeric
-df[, 5:17] <- sapply(df[, 5:17], as.numeric)
+df[, 5:20] <- sapply(df[, 5:20], as.numeric)
 # convert into same scale
 df[, 5:13] <- df[, 5:13] / 100
-# the scores of Presentation and Report are currently NAs, 
+# calculate presention score by averaging three judges
+# Note: the scores are already contain the weight of 0.3
+df$Presentation <- round(rowMeans(df[, 18:20]) / 0.3 / 100, 2)
+# the scores of Report are currently NAs, 
 # temporarily fill them with 0
 df[is.na(df)] <- 0
 
